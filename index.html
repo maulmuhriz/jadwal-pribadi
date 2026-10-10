@@ -69,6 +69,12 @@ footer{margin-top:24px;text-align:center;font-size:.82rem;color:var(--muted)}
     <div class="tabs" id="dayTabs" role="group" aria-label="Pilih hari"></div>
     <div id="dailySchedule" class="schedule" aria-live="polite"></div>
   </section>
+  <section class="panel" id="classCalendarExport">
+    <h2>Pengingat kuliah di Google Calendar</h2>
+    <p>Unduh jadwal kuliah berulang setiap minggu, Senin–Jumat, lengkap dengan pengingat 30 menit sebelum kelas. Jadwal dimulai minggu 12 Oktober 2026.</p>
+    <button id="downloadClassCalendar">Unduh jadwal kuliah mingguan (.ics)</button>
+    <p class="event-note">Setelah diimpor ke Google Calendar, periksa pengaturan notifikasi setiap acara. Jadwal berulang ini tidak memiliki tanggal akhir semester karena tanggal akhir belum ditentukan.</p>
+  </section>
   <section class="panel">
     <h2>Gambaran satu minggu</h2>
     <div class="week-grid" id="weekGrid"></div>
@@ -145,6 +151,25 @@ document.getElementById("downloadTargetCalendar").addEventListener("click",()=>{
   lines.push("END:VCALENDAR");
   const blob=new Blob([lines.join("\r\n")+"\r\n"],{type:"text/calendar;charset=utf-8"});
   const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="target-harian-jarkom-2026-10-11.ics";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+});
+document.getElementById("downloadClassCalendar").addEventListener("click",()=>{
+  const classes=[
+    {id:"k3l",day:"MO",date:"20261012",start:"100000",end:"120000",title:"K3L"},
+    {id:"ai",day:"MO",date:"20261012",start:"130000",end:"152000",title:"Artificial Intelligence"},
+    {id:"kapita-selekta",day:"TU",date:"20261013",start:"092000",end:"120000",title:"Kapita Selekta"},
+    {id:"cybersecurity",day:"TU",date:"20261013",start:"130000",end:"154000",title:"Cybersecurity"},
+    {id:"jarkom-lab",day:"WE",date:"20261014",start:"080000",end:"100000",title:"Praktikum Jaringan Komputer"},
+    {id:"kriptografi",day:"WE",date:"20261014",start:"150000",end:"173000",title:"Kriptografi"},
+    {id:"metodologi-penelitian",day:"TH",date:"20261015",start:"130000",end:"154000",title:"Metodologi Penelitian"},
+    {id:"sistem-informasi",day:"FR",date:"20261016",start:"092000",end:"110500",title:"Sistem Informasi"},
+    {id:"jaringan-komputer",day:"FR",date:"20261016",start:"130000",end:"154500",title:"Jaringan Komputer"}
+  ];
+  const esc=s=>s.replace(/\\/g,"\\\\").replace(/,/g,"\\,").replace(/;/g,"\\;").replace(/\n/g,"\\n");
+  const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Jadwal Pribadi Maul//ID","CALSCALE:GREGORIAN","METHOD:PUBLISH","BEGIN:VTIMEZONE","TZID:Asia/Jakarta","X-LIC-LOCATION:Asia/Jakarta","BEGIN:STANDARD","DTSTART:19700101T000000","TZOFFSETFROM:+0700","TZOFFSETTO:+0700","TZNAME:WIB","END:STANDARD","END:VTIMEZONE"];
+  classes.forEach(c=>lines.push("BEGIN:VEVENT","UID:class-"+c.id+"@jadwal-pribadi","DTSTAMP:20261011T000000Z","DTSTART;TZID=Asia/Jakarta:"+c.date+"T"+c.start,"DTEND;TZID=Asia/Jakarta:"+c.date+"T"+c.end,"RRULE:FREQ=WEEKLY;BYDAY="+c.day,"SUMMARY:"+esc(c.title),"DESCRIPTION:"+esc("Jadwal kuliah mingguan. Sisihkan waktu perjalanan sekitar 15 menit sekali jalan."),"BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+esc("Persiapan kuliah: "+c.title+" (30 menit lagi)"),"TRIGGER:-PT30M","END:VALARM","END:VEVENT"));
+  lines.push("END:VCALENDAR");
+  const blob=new Blob([lines.join("\r\n")+"\r\n"],{type:"text/calendar;charset=utf-8"});
+  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="jadwal-kuliah-mingguan-maul.ics";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
 });
 document.querySelectorAll("#checklist input").forEach(input=>{const key="planner-"+new Date().toLocaleDateString("sv-SE")+"-"+input.dataset.key;input.checked=localStorage.getItem(key)==="1";input.addEventListener("change",()=>localStorage.setItem(key,input.checked?"1":"0"));});
 document.getElementById("resetChecks").addEventListener("click",()=>{document.querySelectorAll("#checklist input").forEach(input=>{input.checked=false;localStorage.removeItem("planner-"+new Date().toLocaleDateString("sv-SE")+"-"+input.dataset.key);});});
