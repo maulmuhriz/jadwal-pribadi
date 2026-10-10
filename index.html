@@ -270,7 +270,7 @@ function requestGoogleToken(){
     },
     error_callback: (error) => setGoogleStatus("Login Google tidak selesai: " + (error && error.message ? error.message : "coba ulangi prosesnya."))
   });
-  googleTokenClient.requestAccessToken({prompt:"consent"});
+  googleTokenClient.requestAccessToken({prompt:""});
 }
 document.getElementById("connectGoogleCalendar").addEventListener("click",requestGoogleToken);
 async function sendSelectedDateTargets(){
