@@ -27,6 +27,7 @@ button:hover{border-color:#94a3b8}.tabs button[aria-pressed="true"]{background:v
 .week-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .day-card{padding:15px}.day-card .day-top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}.day-card ul{padding-left:18px;margin:8px 0 0}.day-card li{margin:6px 0;color:#475569;font-size:.9rem}
 .checklist{display:grid;gap:10px}.check{display:flex;align-items:flex-start;gap:10px}.check input{margin-top:5px;accent-color:var(--accent);width:17px;height:17px}.check label{flex:1}.check small{display:block;color:var(--muted);margin-top:2px}
+.targets{display:grid;gap:10px}.target-item{display:grid;grid-template-columns:24px 105px 1fr;align-items:start;gap:10px;padding:13px;border:1px solid var(--line);border-radius:12px}.target-item input{width:18px;height:18px;margin-top:3px;accent-color:var(--green)}.target-time{font-weight:750;color:var(--accent);font-variant-numeric:tabular-nums}.target-item label{cursor:pointer}.target-item small{display:block;color:var(--muted);margin-top:3px}.target-item.done{background:#f0fdfa;border-color:#99f6e4}.target-item.done .target-name{text-decoration:line-through;color:var(--muted)}.target-summary{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin:12px 0}.progress-track{height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden;flex:1;min-width:100px}.progress-fill{height:100%;width:0;background:var(--green);transition:width .2s}.target-summary strong{font-variant-numeric:tabular-nums}
 .reminders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.reminder{padding:12px;border:1px solid var(--line);border-radius:12px}.reminder time{font-weight:750;color:var(--accent);display:block}
 .note{border-left:3px solid var(--accent);padding:10px 13px;background:#f1f5f9;border-radius:0 10px 10px 0;color:#475569;font-size:.9rem}
 footer{margin-top:24px;text-align:center;font-size:.82rem;color:var(--muted)}
@@ -44,6 +45,19 @@ footer{margin-top:24px;text-align:center;font-size:.82rem;color:var(--muted)}
     <div class="stat"><strong>Senin–Jumat</strong><span>Jadwal kuliah utama</span></div>
     <div class="stat"><strong>15 menit</strong><span>Estimasi perjalanan sekali jalan</span></div>
     <div class="stat"><strong>23.00</strong><span>Target tidur yang dipilih</span></div>
+  </section>
+  <section class="panel" id="dailyTargets">
+    <div class="section-head"><h2>Target Hari Ini 🎯</h2><span class="tag">Minggu, 11 Oktober 2026</span></div>
+    <p>Fokus menyelesaikan Tugas Jaringan Komputer (Jarkom) 3–6. Setiap tugas mendapat satu jam.</p>
+    <div class="target-summary"><strong id="targetProgressText">0 dari 4 selesai</strong><div class="progress-track" role="progressbar" aria-label="Progres target hari ini" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><div class="progress-fill" id="targetProgressFill"></div></div></div>
+    <div class="targets" id="todayTargets">
+      <div class="target-item"><input type="checkbox" id="target-jarkom3" data-target="jarkom3"><div class="target-time">06.00–07.00</div><label for="target-jarkom3"><span class="target-name">Tugas Jarkom 3</span><small>Fokus mengerjakan dan cek hasil sebelum lanjut.</small></label></div>
+      <div class="target-item"><input type="checkbox" id="target-jarkom4" data-target="jarkom4"><div class="target-time">07.00–08.00</div><label for="target-jarkom4"><span class="target-name">Tugas Jarkom 4</span><small>Selesaikan bagian utama, lalu simpan pekerjaan.</small></label></div>
+      <div class="target-item"><input type="checkbox" id="target-jarkom5" data-target="jarkom5"><div class="target-time">08.00–09.00</div><label for="target-jarkom5"><span class="target-name">Tugas Jarkom 5</span><small>Kerjakan satu jam fokus; ambil jeda singkat bila perlu.</small></label></div>
+      <div class="target-item"><input type="checkbox" id="target-jarkom6" data-target="jarkom6"><div class="target-time">09.00–10.00</div><label for="target-jarkom6"><span class="target-name">Tugas Jarkom 6</span><small>Rampungkan tugas dan periksa kembali kelengkapannya.</small></label></div>
+    </div>
+    <div style="margin-top:14px"><button id="resetTargets">Reset progres target</button></div>
+    <p class="event-note">Centang tiap target setelah selesai. Progres tersimpan di browser perangkat ini; perubahan target pada HTML GitHub bisa dilihat siapa saja karena repositori bersifat publik.</p>
   </section>
   <section class="panel">
     <div class="section-head"><h2>Agenda harian</h2><button onclick="window.print()">Cetak / Simpan PDF</button></div>
@@ -99,6 +113,13 @@ const tabs=document.getElementById("dayTabs"), daily=document.getElementById("da
 function showDay(idx){[...tabs.children].forEach((b,i)=>b.setAttribute("aria-pressed",i===idx?"true":"false"));daily.innerHTML=days[idx].events.map(e=>`<article class="event"><div class="time">${e[0]}</div><div><div class="event-title">${e[1]}</div><span class="tag ${e[3]||""}">${e[2]}</span></div></article>`).join("");}
 days.forEach((d,i)=>{const b=document.createElement("button");b.textContent=d.name;b.setAttribute("aria-pressed","false");b.onclick=()=>showDay(i);tabs.appendChild(b);const card=document.createElement("article");card.className="day-card";card.innerHTML=`<div class="day-top"><h3>${d.name}</h3><span class="tag">${d.events.filter(e=>e[3]==="class").length} kelas/praktikum</span></div><p>${d.focus}</p><ul>${d.events.filter(e=>e[3]==="class").map(e=>`<li><strong>${e[0]}</strong> · ${e[1]}</li>`).join("")||"<li>Tidak ada jadwal kuliah tetap yang diberikan.</li>"}</ul>`;grid.appendChild(card);});
 const today=new Date();const names=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];document.getElementById("todayLabel").textContent=names[today.getDay()]+" · WIB";showDay((today.getDay()+6)%7);
+const targetDateKey="2026-10-11";
+const targetInputs=[...document.querySelectorAll("#todayTargets input[data-target]")];
+function updateTargetProgress(){let done=0;targetInputs.forEach(input=>{const key="planner-targets-"+targetDateKey+"-"+input.dataset.target;input.checked=localStorage.getItem(key)==="1";input.closest(".target-item").classList.toggle("done",input.checked);if(input.checked)done++;});document.getElementById("targetProgressText").textContent=done+" dari "+targetInputs.length+" selesai";document.getElementById("targetProgressFill").style.width=(done/targetInputs.length*100)+"%";document.querySelector("#dailyTargets [role=progressbar]").setAttribute("aria-valuenow",done);}
+targetInputs.forEach(input=>input.addEventListener("change",()=>{localStorage.setItem("planner-targets-"+targetDateKey+"-"+input.dataset.target,input.checked?"1":"0");updateTargetProgress();}));
+document.getElementById("resetTargets").addEventListener("click",()=>{targetInputs.forEach(input=>localStorage.removeItem("planner-targets-"+targetDateKey+"-"+input.dataset.target));updateTargetProgress();});
+updateTargetProgress();
+
 document.querySelectorAll("#checklist input").forEach(input=>{const key="planner-"+new Date().toLocaleDateString("sv-SE")+"-"+input.dataset.key;input.checked=localStorage.getItem(key)==="1";input.addEventListener("change",()=>localStorage.setItem(key,input.checked?"1":"0"));});
 document.getElementById("resetChecks").addEventListener("click",()=>{document.querySelectorAll("#checklist input").forEach(input=>{input.checked=false;localStorage.removeItem("planner-"+new Date().toLocaleDateString("sv-SE")+"-"+input.dataset.key);});});
 </script>
