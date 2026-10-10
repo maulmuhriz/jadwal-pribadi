@@ -150,6 +150,7 @@ const defaultTargets={
   ]
 };
 const targetDatePicker=document.getElementById("targetDatePicker");
+const todayForPlanner=new Date();targetDatePicker.value=todayForPlanner.getFullYear()+"-"+String(todayForPlanner.getMonth()+1).padStart(2,"0")+"-"+String(todayForPlanner.getDate()).padStart(2,"0");
 const targetsStorageKey="jadwal-pribadi-custom-targets-v1";
 const targetDoneStorageKey="jadwal-pribadi-target-progress-v1";
 function readStored(key,fallback){try{return JSON.parse(localStorage.getItem(key)||"null")||fallback;}catch(e){return fallback;}}
