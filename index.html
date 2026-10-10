@@ -93,11 +93,14 @@ footer{margin-top:24px;text-align:center;font-size:.82rem;color:var(--muted)}
   <section class="panel">
     <h2>Pengingat rutin</h2>
     <div class="reminders">
+      <div class="reminder"><time>05.00 · Setiap hari</time><strong>Bangun tidur</strong><p>Mulai hari dan cek kondisi tubuh sebelum beraktivitas.</p></div>
+      <div class="reminder"><time>05.10 · Setiap hari</time><strong>Mandi dan bersiap</strong><p>Waktu mandi, berpakaian, dan persiapan pagi.</p></div>
       <div class="reminder"><time>06.30 · Setiap hari</time><strong>Cek agenda</strong><p>Periksa jadwal, tenggat, dan tiga prioritas.</p></div>
-      <div class="reminder"><time>20.30 · Setiap hari</time><strong>Evaluasi singkat</strong><p>Tinjau progres dan siapkan kebutuhan besok.</p></div>
-      <div class="reminder"><time>22.30 · Disarankan</time><strong>Mulai rutinitas tidur</strong><p>Pengingat ini belum dibuat sebagai notifikasi otomatis.</p></div>
+      <div class="reminder"><time>20.30 · Setiap hari</time><strong>Evaluasi dan mulai tenang</strong><p>Pengingat untuk menutup aktivitas; waktu tidur tetap fleksibel.</p></div>
       <div class="reminder"><time>19.00 · Setiap Minggu</time><strong>Evaluasi mingguan</strong><p>Cek tenggat, progres proyek, dan rencana pekan baru.</p></div>
     </div>
+    <p style="margin-top:14px"><button id="downloadRoutineCalendar">Unduh pengingat bangun &amp; mandi (.ics)</button></p>
+    <p class="event-note">Impor file ini ke Google Calendar untuk pengingat berulang. Pengingat malam tidak mengunci jam tidur; sesuaikan dengan tugas, kelas, dan kebutuhan istirahat.</p>
   </section>
   <div class="note"><strong>Catatan:</strong> Jam di luar kuliah adalah kerangka yang fleksibel. Sesuaikan dengan perjalanan, ibadah, makan, kegiatan kampus tambahan, dan tenggat nyata. Target tidur pukul 23.00 dengan bangun pukul 05.00 hanya menyediakan enam jam; pertimbangkan waktu tidur lebih awal agar istirahat cukup.</div>
   <footer>Jadwal pribadi · Bisa dibuka offline · Tampilan responsif untuk laptop dan HP</footer>
@@ -151,6 +154,19 @@ document.getElementById("downloadTargetCalendar").addEventListener("click",()=>{
   lines.push("END:VCALENDAR");
   const blob=new Blob([lines.join("\r\n")+"\r\n"],{type:"text/calendar;charset=utf-8"});
   const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="target-harian-jarkom-2026-10-11.ics";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+});
+document.getElementById("downloadRoutineCalendar").addEventListener("click",()=>{
+  const events=[
+    {id:"wake-up",date:"20261011",start:"050000",end:"051000",title:"Bangun tidur",description:"Pengingat harian untuk memulai hari."},
+    {id:"shower",date:"20261011",start:"051000",end:"053000",title:"Mandi dan bersiap",description:"Rutinitas pagi; sesuaikan durasinya sesuai kebutuhan."},
+    {id:"wind-down",date:"20261011",start:"203000",end:"204000",title:"Evaluasi singkat dan mulai tenang (fleksibel)",description:"Mulai menutup aktivitas dan siapkan besok. Jam tidur tetap fleksibel."}
+  ];
+  const esc=s=>s.replace(/\\/g,"\\\\").replace(/,/g,"\\,").replace(/;/g,"\\;").replace(/\n/g,"\\n");
+  const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Jadwal Pribadi Maul//ID","CALSCALE:GREGORIAN","METHOD:PUBLISH","BEGIN:VTIMEZONE","TZID:Asia/Jakarta","X-LIC-LOCATION:Asia/Jakarta","BEGIN:STANDARD","DTSTART:19700101T000000","TZOFFSETFROM:+0700","TZOFFSETTO:+0700","TZNAME:WIB","END:STANDARD","END:VTIMEZONE"];
+  events.forEach(e=>lines.push("BEGIN:VEVENT","UID:routine-"+e.id+"@jadwal-pribadi","DTSTAMP:20261011T000000Z","DTSTART;TZID=Asia/Jakarta:"+e.date+"T"+e.start,"DTEND;TZID=Asia/Jakarta:"+e.date+"T"+e.end,"RRULE:FREQ=DAILY","SUMMARY:"+esc(e.title),"DESCRIPTION:"+esc(e.description),"BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+esc("Pengingat: "+e.title),"TRIGGER:PT0M","END:VALARM","END:VEVENT"));
+  lines.push("END:VCALENDAR");
+  const blob=new Blob([lines.join("\r\n")+"\r\n"],{type:"text/calendar;charset=utf-8"});
+  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="rutinitas-bangun-mandi-maul.ics";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
 });
 document.getElementById("downloadClassCalendar").addEventListener("click",()=>{
   const classes=[
