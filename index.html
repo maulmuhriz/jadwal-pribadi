@@ -60,7 +60,7 @@ footer{margin-top:24px;text-align:center;font-size:.82rem;color:var(--muted)}
       <div class="target-item"><input type="checkbox" id="target-laprak3" data-target="laprak3"><div class="target-time">13.00–15.00</div><label for="target-laprak3"><span class="target-name">Laprak Jarkom 3</span><small>Kerjakan laporan praktikum selama dua jam.</small></label></div>
       <div class="target-item"><input type="checkbox" id="target-laprak4" data-target="laprak4"><div class="target-time">15.00–17.00</div><label for="target-laprak4"><span class="target-name">Laprak Jarkom 4</span><small>Kerjakan laporan praktikum selama dua jam.</small></label></div>
     </div>
-    <div style="margin-top:14px"><button id="resetTargets">Reset progres target</button></div>
+    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><button id="resetTargets">Reset progres target</button><button id="downloadTargetCalendar">Unduh pengingat kalender (.ics)</button></div>
     <p class="event-note">Centang tiap target setelah selesai. Progres tersimpan di browser perangkat ini; perubahan target pada HTML GitHub bisa dilihat siapa saja karena repositori bersifat publik.</p>
   </section>
   <section class="panel">
@@ -124,6 +124,28 @@ targetInputs.forEach(input=>input.addEventListener("change",()=>{localStorage.se
 document.getElementById("resetTargets").addEventListener("click",()=>{targetInputs.forEach(input=>localStorage.removeItem("planner-targets-"+targetDateKey+"-"+input.dataset.target));updateTargetProgress();});
 updateTargetProgress();
 
+document.getElementById("downloadTargetCalendar").addEventListener("click",()=>{
+  const events=[
+    {id:"jarkom3",title:"Tugas Jarkom 3",start:[6,0],end:[7,0]},
+    {id:"jarkom4",title:"Tugas Jarkom 4",start:[7,0],end:[8,0]},
+    {id:"jarkom5",title:"Tugas Jarkom 5",start:[8,0],end:[9,0]},
+    {id:"jarkom6",title:"Tugas Jarkom 6",start:[9,0],end:[10,0]},
+    {id:"fix-laptop",title:"Memperbaiki laptop teman",start:[10,0],end:[11,0]},
+    {id:"laprak2",title:"Laprak Jarkom 2",start:[11,0],end:[13,0]},
+    {id:"laprak3",title:"Laprak Jarkom 3",start:[13,0],end:[15,0]},
+    {id:"laprak4",title:"Laprak Jarkom 4",start:[15,0],end:[17,0]}
+  ];
+  const pad=n=>String(n).padStart(2,"0");
+  const utcStamp=(hour,minute)=>{const d=new Date(Date.UTC(2026,9,11,hour-7,minute));return d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+"T"+pad(d.getUTCHours())+pad(d.getUTCMinutes())+"00Z";};
+  const escapeICS=s=>s.replace(/\\/g,"\\\\").replace(/,/g,"\\,").replace(/;/g,"\\;").replace(/\n/g,"\\n");
+  const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Jadwal Pribadi Maul//ID","CALSCALE:GREGORIAN","METHOD:PUBLISH"];
+  events.forEach(e=>{
+    lines.push("BEGIN:VEVENT","UID:"+e.id+"-20261011@jadwal-pribadi","DTSTAMP:"+utcStamp(0,0),"DTSTART:"+utcStamp(e.start[0],e.start[1]),"DTEND:"+utcStamp(e.end[0],e.end[1]),"SUMMARY:"+escapeICS(e.title),"DESCRIPTION:"+escapeICS("Target harian dari Jadwal Pribadi. Waktu WIB (UTC+7)."),"BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+escapeICS("Waktunya: "+e.title),"TRIGGER:PT0M","END:VALARM","END:VEVENT");
+  });
+  lines.push("END:VCALENDAR");
+  const blob=new Blob([lines.join("\r\n")+"\r\n"],{type:"text/calendar;charset=utf-8"});
+  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="target-harian-jarkom-2026-10-11.ics";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+});
 document.querySelectorAll("#checklist input").forEach(input=>{const key="planner-"+new Date().toLocaleDateString("sv-SE")+"-"+input.dataset.key;input.checked=localStorage.getItem(key)==="1";input.addEventListener("change",()=>localStorage.setItem(key,input.checked?"1":"0"));});
 document.getElementById("resetChecks").addEventListener("click",()=>{document.querySelectorAll("#checklist input").forEach(input=>{input.checked=false;localStorage.removeItem("planner-"+new Date().toLocaleDateString("sv-SE")+"-"+input.dataset.key);});});
 </script>
