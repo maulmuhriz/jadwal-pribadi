@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f8fafc">
+<title>Jadwal Mingguan Maul</title>
+<style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#172033;--muted:#64748b;--line:#e2e8f0;--accent:#3157d5;--soft:#eef2ff;--green:#0f766e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:1100px;margin:auto;padding:28px 18px 56px}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.eyebrow{color:var(--accent);font-weight:700;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase}
+h1{font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.12;margin:.35rem 0 .6rem;letter-spacing:-.04em}
+p{margin:.3rem 0;color:var(--muted)}.date{background:var(--soft);color:var(--accent);border-radius:999px;padding:8px 12px;font-size:.85rem;font-weight:650}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:24px 0}
+.stat,.panel,.day-card{background:var(--card);border:1px solid var(--line);border-radius:18px}
+.stat{padding:16px}.stat strong{display:block;font-size:1.3rem}.stat span{font-size:.85rem;color:var(--muted)}
+.panel{padding:18px;margin:18px 0}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h2{font-size:1.15rem;margin:0 0 12px}h3{font-size:1rem;margin:0}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:11px;padding:9px 13px}
+button:hover{border-color:#94a3b8}.tabs button[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.schedule{display:grid;gap:9px}.event{display:grid;grid-template-columns:130px 1fr;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px}
+.time{font-weight:700;font-variant-numeric:tabular-nums;font-size:.9rem}.event-title{font-weight:650}.event-note{font-size:.88rem;color:var(--muted);margin-top:2px}
+.tag{display:inline-block;font-size:.75rem;background:#f1f5f9;color:#475569;padding:3px 8px;border-radius:999px;margin-top:6px}
+.tag.class{background:#e0e7ff;color:#3730a3}.tag.rest{background:#ccfbf1;color:#115e59}
+.week-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.day-card{padding:15px}.day-card .day-top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}.day-card ul{padding-left:18px;margin:8px 0 0}.day-card li{margin:6px 0;color:#475569;font-size:.9rem}
+.checklist{display:grid;gap:10px}.check{display:flex;align-items:flex-start;gap:10px}.check input{margin-top:5px;accent-color:var(--accent);width:17px;height:17px}.check label{flex:1}.check small{display:block;color:var(--muted);margin-top:2px}
+.reminders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.reminder{padding:12px;border:1px solid var(--line);border-radius:12px}.reminder time{font-weight:750;color:var(--accent);display:block}
+.note{border-left:3px solid var(--accent);padding:10px 13px;background:#f1f5f9;border-radius:0 10px 10px 0;color:#475569;font-size:.9rem}
+footer{margin-top:24px;text-align:center;font-size:.82rem;color:var(--muted)}
+@media(max-width:650px){main{padding:22px 13px 40px}.stats{grid-template-columns:1fr}.week-grid,.reminders{grid-template-columns:1fr}.event{grid-template-columns:1fr;gap:4px}.time{color:var(--accent)}}
+@media print{body{background:#fff}.tabs,.date,button{display:none}.panel,.day-card,.stat{break-inside:avoid;box-shadow:none}main{max-width:none;padding:0}.week-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<main>
+  <header class="top">
+    <div><div class="eyebrow">Personal planner</div><h1>Jadwal Mingguan</h1><p>Kuliah, tugas, proyek, dan waktu untuk diri sendiri.</p></div>
+    <div class="date" id="todayLabel">Waktu Indonesia Barat · WIB</div>
+  </header>
+  <section class="stats" aria-label="Ringkasan">
+    <div class="stat"><strong>Senin–Jumat</strong><span>Jadwal kuliah utama</span></div>
+    <div class="stat"><strong>15 menit</strong><span>Estimasi perjalanan sekali jalan</span></div>
+    <div class="stat"><strong>23.00</strong><span>Target tidur yang dipilih</span></div>
+  </section>
+  <section class="panel">
+    <div class="section-head"><h2>Agenda harian</h2><button onclick="window.print()">Cetak / Simpan PDF</button></div>
+    <p>Pilih hari untuk melihat agenda kuliah dan blok kegiatan yang disarankan.</p>
+    <div class="tabs" id="dayTabs" role="group" aria-label="Pilih hari"></div>
+    <div id="dailySchedule" class="schedule" aria-live="polite"></div>
+  </section>
+  <section class="panel">
+    <h2>Gambaran satu minggu</h2>
+    <div class="week-grid" id="weekGrid"></div>
+  </section>
+  <section class="panel">
+    <h2>Daftar cek harian</h2>
+    <p>Centang hal yang sudah dilakukan. Status tersimpan di browser perangkat ini.</p>
+    <div class="checklist" id="checklist">
+      <div class="check"><input type="checkbox" id="c1" data-key="agenda"><label for="c1">Cek agenda dan tiga prioritas<small>Periksa kelas, tenggat, dan kebutuhan hari ini.</small></label></div>
+      <div class="check"><input type="checkbox" id="c2" data-key="study"><label for="c2">Selesaikan satu sesi fokus<small>Tugas, laporan praktikum, atau target proyek.</small></label></div>
+      <div class="check"><input type="checkbox" id="c3" data-key="break"><label for="c3">Ambil waktu istirahat yang cukup<small>Makan, minum, bergerak, dan rehat dari layar.</small></label></div>
+      <div class="check"><input type="checkbox" id="c4" data-key="tomorrow"><label for="c4">Siapkan kebutuhan besok<small>Tas, bahan kuliah, dan prioritas berikutnya.</small></label></div>
+    </div>
+    <div style="margin-top:14px"><button id="resetChecks">Reset centang hari ini</button></div>
+  </section>
+  <section class="panel">
+    <h2>Pengingat rutin</h2>
+    <div class="reminders">
+      <div class="reminder"><time>06.30 · Setiap hari</time><strong>Cek agenda</strong><p>Periksa jadwal, tenggat, dan tiga prioritas.</p></div>
+      <div class="reminder"><time>20.30 · Setiap hari</time><strong>Evaluasi singkat</strong><p>Tinjau progres dan siapkan kebutuhan besok.</p></div>
+      <div class="reminder"><time>22.30 · Disarankan</time><strong>Mulai rutinitas tidur</strong><p>Pengingat ini belum dibuat sebagai notifikasi otomatis.</p></div>
+      <div class="reminder"><time>19.00 · Setiap Minggu</time><strong>Evaluasi mingguan</strong><p>Cek tenggat, progres proyek, dan rencana pekan baru.</p></div>
+    </div>
+  </section>
+  <div class="note"><strong>Catatan:</strong> Jam di luar kuliah adalah kerangka yang fleksibel. Sesuaikan dengan perjalanan, ibadah, makan, kegiatan kampus tambahan, dan tenggat nyata. Target tidur pukul 23.00 dengan bangun pukul 05.00 hanya menyediakan enam jam; pertimbangkan waktu tidur lebih awal agar istirahat cukup.</div>
+  <footer>Jadwal pribadi · Bisa dibuka offline · Tampilan responsif untuk laptop dan HP</footer>
+</main>
+<script>
+const days = [
+ {name:"Senin",focus:"Kuliah + tugas AI",events:[
+  ["05.00–06.30","Bangun, rutinitas pagi, sarapan","Pribadi"],["06.30–09.35","Persiapan, perjalanan, dan waktu belajar ringan","Fleksibel"],["10.00–12.00","Keamanan, Kesehatan, Keselamatan dan Lingkungan Kerja Industri","K3L","class"],["12.00–13.00","Makan siang dan istirahat","Istirahat","rest"],["13.00–15.20","Inteligensi Buatan","Kuliah","class"],["15.20–17.30","Perjalanan pulang dan pemulihan","Istirahat","rest"],["18.30–20.00","Tugas AI atau tinjau materi","Fokus"],["20.00–22.30","Waktu pribadi, evaluasi, dan rutinitas malam","Pribadi"],["22.30–23.00","Bersiap tidur","Istirahat","rest"]]},
+ {name:"Selasa",focus:"Kapita Selekta + Keamanan Siber",events:[
+  ["05.00–08.55","Rutinitas pagi, sarapan, dan perjalanan","Pribadi"],["09.20–12.00","Kapita Selekta","Kuliah","class"],["12.00–13.00","Makan siang dan istirahat","Istirahat","rest"],["13.00–15.40","Keamanan Siber","Kuliah","class"],["15.40–17.30","Perjalanan pulang dan istirahat","Istirahat","rest"],["18.30–20.00","Tugas Keamanan Siber atau latihan jaringan","Fokus"],["20.00–22.30","Waktu pribadi dan persiapan besok","Pribadi"],["22.30–23.00","Bersiap tidur","Istirahat","rest"]]},
+ {name:"Rabu",focus:"Praktikum + Kriptografi",events:[
+  ["05.00–07.40","Rutinitas pagi, sarapan, dan perjalanan","Pribadi"],["08.00–10.00","Praktikum Jaringan Komputer","Praktikum","class"],["10.00–12.00","Istirahat, camilan, dan rapikan catatan","Istirahat","rest"],["12.00–13.00","Makan siang","Istirahat","rest"],["13.00–14.30","Belajar ringan atau laporan praktikum","Fokus"],["14.30–15.00","Persiapan kelas","Persiapan"],["15.00–17.30","Kriptografi","Kuliah","class"],["17.30–20.30","Perjalanan, makan, dan pemulihan","Istirahat","rest"],["20.30–22.30","Aktivitas ringan dan waktu pribadi","Pribadi"],["22.30–23.00","Bersiap tidur","Istirahat","rest"]]},
+ {name:"Kamis",focus:"Proyek + Metodologi Penelitian",events:[
+  ["05.00–07.30","Rutinitas pagi dan sarapan","Pribadi"],["08.00–10.00","Sesi fokus proyek atau coding","Proyek"],["10.00–12.00","Tugas, referensi, atau persiapan kuliah","Fokus"],["12.00–13.00","Makan siang dan perjalanan","Istirahat","rest"],["13.00–15.40","Metodologi Penelitian","Kuliah","class"],["15.40–17.30","Perjalanan pulang dan istirahat","Istirahat","rest"],["18.30–20.00","Tugas penelitian atau pengembangan diri","Fokus"],["20.00–22.30","Waktu pribadi dan persiapan besok","Pribadi"],["22.30–23.00","Bersiap tidur","Istirahat","rest"]]},
+ {name:"Jumat",focus:"Sistem Informasi + Jaringan Komputer",events:[
+  ["05.00–08.55","Rutinitas pagi, sarapan, dan perjalanan","Pribadi"],["09.20–11.05","Sistem Informasi","Kuliah","class"],["11.05–13.00","Makan siang, istirahat, dan persiapan kelas","Istirahat","rest"],["13.00–15.45","Jaringan Komputer","Kuliah","class"],["15.45–18.30","Perjalanan pulang dan pemulihan","Istirahat","rest"],["18.30–20.00","Waktu pribadi atau tugas ringan","Fleksibel"],["20.00–22.30","Santai dan kegiatan sosial","Pribadi"],["22.30–23.00","Bersiap tidur","Istirahat","rest"]]},
+ {name:"Sabtu",focus:"Proyek + pengembangan diri",events:[
+  ["05.00–08.00","Rutinitas pagi dan sarapan","Pribadi"],["08.00–10.00","Sesi fokus proyek utama","Proyek"],["10.00–10.30","Istirahat","Istirahat","rest"],["10.30–12.00","Belajar skill baru atau portofolio","Pengembangan diri"],["12.00–13.00","Makan siang","Istirahat","rest"],["13.00–15.00","Tugas tertunda atau proyek tambahan jika perlu","Fleksibel"],["15.00–21.30","Hobi, olahraga ringan, keluarga, teman, waktu pribadi","Pribadi"],["21.30–23.00","Rutinitas malam dan istirahat","Istirahat","rest"]]},
+ {name:"Minggu",focus:"Pemulihan + rencana pekan",events:[
+  ["05.00–09.00","Rutinitas pagi santai dan sarapan","Pribadi"],["09.00–11.00","Belajar ringan atau tugas mendesak","Fleksibel"],["11.00–13.00","Istirahat dan makan siang","Istirahat","rest"],["13.00–17.00","Keluarga, hobi, dan waktu sosial","Pribadi"],["17.00–19.00","Waktu bebas dan makan","Pribadi"],["19.00–19.30","Evaluasi mingguan dan cek tenggat","Perencanaan"],["19.30–21.00","Siapkan tas, pakaian, dan agenda Senin","Persiapan"],["21.00–23.00","Waktu tenang dan rutinitas malam","Istirahat","rest"]]}
+];
+const tabs=document.getElementById("dayTabs"), daily=document.getElementById("dailySchedule"), grid=document.getElementById("weekGrid");
+function showDay(idx){[...tabs.children].forEach((b,i)=>b.setAttribute("aria-pressed",i===idx?"true":"false"));daily.innerHTML=days[idx].events.map(e=>`<article class="event"><div class="time">${e[0]}</div><div><div class="event-title">${e[1]}</div><span class="tag ${e[3]||""}">${e[2]}</span></div></article>`).join("");}
+days.forEach((d,i)=>{const b=document.createElement("button");b.textContent=d.name;b.setAttribute("aria-pressed","false");b.onclick=()=>showDay(i);tabs.appendChild(b);const card=document.createElement("article");card.className="day-card";card.innerHTML=`<div class="day-top"><h3>${d.name}</h3><span class="tag">${d.events.filter(e=>e[3]==="class").length} kelas/praktikum</span></div><p>${d.focus}</p><ul>${d.events.filter(e=>e[3]==="class").map(e=>`<li><strong>${e[0]}</strong> · ${e[1]}</li>`).join("")||"<li>Tidak ada jadwal kuliah tetap yang diberikan.</li>"}</ul>`;grid.appendChild(card);});
+const today=new Date();const names=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];document.getElementById("todayLabel").textContent=names[today.getDay()]+" · WIB";showDay((today.getDay()+6)%7);
+document.querySelectorAll("#checklist input").forEach(input=>{const key="planner-"+new Date().toLocaleDateString("sv-SE")+"-"+input.dataset.key;input.checked=localStorage.getItem(key)==="1";input.addEventListener("change",()=>localStorage.setItem(key,input.checked?"1":"0"));});
+document.getElementById("resetChecks").addEventListener("click",()=>{document.querySelectorAll("#checklist input").forEach(input=>{input.checked=false;localStorage.removeItem("planner-"+new Date().toLocaleDateString("sv-SE")+"-"+input.dataset.key);});});
+</script>
+</body>
+</html>
