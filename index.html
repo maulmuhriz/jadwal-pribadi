@@ -28,6 +28,8 @@ button:hover{border-color:#94a3b8}.tabs button[aria-pressed="true"]{background:v
 .day-card{padding:15px}.day-card .day-top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}.day-card ul{padding-left:18px;margin:8px 0 0}.day-card li{margin:6px 0;color:#475569;font-size:.9rem}
 .checklist{display:grid;gap:10px}.check{display:flex;align-items:flex-start;gap:10px}.check input{margin-top:5px;accent-color:var(--accent);width:17px;height:17px}.check label{flex:1}.check small{display:block;color:var(--muted);margin-top:2px}
 .targets{display:grid;gap:10px}.target-item{display:grid;grid-template-columns:24px 105px 1fr;align-items:start;gap:10px;padding:13px;border:1px solid var(--line);border-radius:12px}.target-item input{width:18px;height:18px;margin-top:3px;accent-color:var(--green)}.target-time{font-weight:750;color:var(--accent);font-variant-numeric:tabular-nums}.target-item label{cursor:pointer}.target-item small{display:block;color:var(--muted);margin-top:3px}.target-item.done{background:#f0fdfa;border-color:#99f6e4}.target-item.done .target-name{text-decoration:line-through;color:var(--muted)}.target-summary{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin:12px 0}.progress-track{height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden;flex:1;min-width:100px}.progress-fill{height:100%;width:0;background:var(--green);transition:width .2s}.target-summary strong{font-variant-numeric:tabular-nums}
+.target-planner-controls,.target-form{display:grid;gap:8px;margin:14px 0}.target-planner-controls{grid-template-columns:1fr minmax(160px,240px);align-items:center}.target-form{padding:14px;border:1px solid var(--line);border-radius:14px;background:#fbfdff}.target-form label,.target-planner-controls label{font-size:.9rem;font-weight:650}.target-form input,.target-planner-controls input{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink)}.target-time-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.target-time-fields>div{display:grid;gap:6px}.weekly-targets{margin-top:22px}.upcoming-target-list{display:grid;gap:8px}.upcoming-date-group{border:1px solid var(--line);border-radius:12px;padding:12px}.upcoming-date-group h4{margin:0 0 8px;font-size:.95rem}.upcoming-date-group ul{padding-left:18px;margin:0}.upcoming-date-group li{margin:5px 0;color:#475569;font-size:.9rem}.target-delete{font-size:.8rem;padding:5px 8px}.target-item{grid-template-columns:24px 105px minmax(0,1fr) auto}.target-empty{padding:14px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);font-size:.9rem}
+
 .reminders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.reminder{padding:12px;border:1px solid var(--line);border-radius:12px}.reminder time{font-weight:750;color:var(--accent);display:block}
 .note{border-left:3px solid var(--accent);padding:10px 13px;background:#f1f5f9;border-radius:0 10px 10px 0;color:#475569;font-size:.9rem}
 footer{margin-top:24px;text-align:center;font-size:.82rem;color:var(--muted)}
@@ -47,21 +49,30 @@ footer{margin-top:24px;text-align:center;font-size:.82rem;color:var(--muted)}
     <div class="stat"><strong>23.00</strong><span>Target tidur yang dipilih</span></div>
   </section>
   <section class="panel" id="dailyTargets">
-    <div class="section-head"><h2>Target Hari Ini 🎯</h2><span class="tag">Minggu, 11 Oktober 2026</span></div>
-    <p>Target hari ini: Tugas Jarkom 3–6, membantu memperbaiki laptop teman, lalu menyelesaikan Laprak Jarkom 2–4.</p>
+    <div class="section-head"><h2>Target &amp; Rencana Harian 🎯</h2><span class="tag" id="selectedDateLabel">Pilih tanggal</span></div>
+    <p>Rencanakan target dari hari sebelumnya. Pilih tanggal yang ingin kamu siapkan, tambahkan kegiatan, lalu cek progresnya saat hari itu tiba.</p>
+    <div class="target-planner-controls">
+      <label for="targetDatePicker">Tanggal target</label>
+      <input id="targetDatePicker" type="date" value="2026-10-11">
+    </div>
+    <form id="addTargetForm" class="target-form">
+      <label for="newTargetTitle">Nama target</label>
+      <input id="newTargetTitle" type="text" maxlength="120" placeholder="Contoh: Kerjakan laporan praktikum" required>
+      <div class="target-time-fields">
+        <div><label for="newTargetStart">Mulai</label><input id="newTargetStart" type="time" value="18:00" required></div>
+        <div><label for="newTargetEnd">Selesai</label><input id="newTargetEnd" type="time" value="19:00" required></div>
+      </div>
+      <button type="submit">Tambah target ke tanggal ini</button>
+    </form>
     <div class="target-summary"><strong id="targetProgressText">0 dari 4 selesai</strong><div class="progress-track" role="progressbar" aria-label="Progres target hari ini" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="progress-fill" id="targetProgressFill"></div></div></div>
-    <div class="targets" id="todayTargets">
-      <div class="target-item"><input type="checkbox" id="target-jarkom3" data-target="jarkom3"><div class="target-time">06.00–07.00</div><label for="target-jarkom3"><span class="target-name">Tugas Jarkom 3</span><small>Fokus mengerjakan dan cek hasil sebelum lanjut.</small></label></div>
-      <div class="target-item"><input type="checkbox" id="target-jarkom4" data-target="jarkom4"><div class="target-time">07.00–08.00</div><label for="target-jarkom4"><span class="target-name">Tugas Jarkom 4</span><small>Selesaikan bagian utama, lalu simpan pekerjaan.</small></label></div>
-      <div class="target-item"><input type="checkbox" id="target-jarkom5" data-target="jarkom5"><div class="target-time">08.00–09.00</div><label for="target-jarkom5"><span class="target-name">Tugas Jarkom 5</span><small>Kerjakan satu jam fokus; ambil jeda singkat bila perlu.</small></label></div>
-      <div class="target-item"><input type="checkbox" id="target-jarkom6" data-target="jarkom6"><div class="target-time">09.00–10.00</div><label for="target-jarkom6"><span class="target-name">Tugas Jarkom 6</span><small>Rampungkan tugas dan periksa kembali kelengkapannya.</small></label></div>
-      <div class="target-item"><input type="checkbox" id="target-fix-laptop" data-target="fix-laptop"><div class="target-time">10.00–11.00</div><label for="target-fix-laptop"><span class="target-name">Memperbaiki laptop teman</span><small>Periksa gejala dan lakukan pengecekan sesuai masalahnya.</small></label></div>
-      <div class="target-item"><input type="checkbox" id="target-laprak2" data-target="laprak2"><div class="target-time">11.00–13.00</div><label for="target-laprak2"><span class="target-name">Laprak Jarkom 2</span><small>Kerjakan laporan praktikum selama dua jam.</small></label></div>
-      <div class="target-item"><input type="checkbox" id="target-laprak3" data-target="laprak3"><div class="target-time">13.00–15.00</div><label for="target-laprak3"><span class="target-name">Laprak Jarkom 3</span><small>Kerjakan laporan praktikum selama dua jam.</small></label></div>
-      <div class="target-item"><input type="checkbox" id="target-laprak4" data-target="laprak4"><div class="target-time">15.00–17.00</div><label for="target-laprak4"><span class="target-name">Laprak Jarkom 4</span><small>Kerjakan laporan praktikum selama dua jam.</small></label></div>
+    <div class="targets" id="todayTargets"></div>
+    <div class="weekly-targets">
+      <h3>Rencana target 7 hari</h3>
+      <p class="event-note">Target yang sudah kamu simpan untuk tanggal mendatang akan muncul di sini.</p>
+      <div id="upcomingTargets" class="upcoming-target-list"></div>
     </div>
     <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><button id="resetTargets">Reset progres target</button><button id="downloadTargetCalendar">Unduh pengingat kalender (.ics)</button></div>
-    <p class="event-note">Centang tiap target setelah selesai. Progres tersimpan di browser perangkat ini; perubahan target pada HTML GitHub bisa dilihat siapa saja karena repositori bersifat publik.</p>
+    <p class="event-note">Target dan progres tersimpan di browser perangkat ini. Agar target tampil di perangkat lain, kamu perlu menambahkannya juga di browser tersebut. Jangan masukkan informasi rahasia karena situs ini publik.</p>
   </section>
   <section class="panel">
     <div class="section-head"><h2>Agenda harian</h2><button onclick="window.print()">Cetak / Simpan PDF</button></div>
@@ -126,35 +137,83 @@ const tabs=document.getElementById("dayTabs"), daily=document.getElementById("da
 function showDay(idx){[...tabs.children].forEach((b,i)=>b.setAttribute("aria-pressed",i===idx?"true":"false"));daily.innerHTML=days[idx].events.map(e=>`<article class="event"><div class="time">${e[0]}</div><div><div class="event-title">${e[1]}</div><span class="tag ${e[3]||""}">${e[2]}</span></div></article>`).join("");}
 days.forEach((d,i)=>{const b=document.createElement("button");b.textContent=d.name;b.setAttribute("aria-pressed","false");b.onclick=()=>showDay(i);tabs.appendChild(b);const card=document.createElement("article");card.className="day-card";card.innerHTML=`<div class="day-top"><h3>${d.name}</h3><span class="tag">${d.events.filter(e=>e[3]==="class").length} kelas/praktikum</span></div><p>${d.focus}</p><ul>${d.events.filter(e=>e[3]==="class").map(e=>`<li><strong>${e[0]}</strong> · ${e[1]}</li>`).join("")||"<li>Tidak ada jadwal kuliah tetap yang diberikan.</li>"}</ul>`;grid.appendChild(card);});
 const today=new Date();const names=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];document.getElementById("todayLabel").textContent=names[today.getDay()]+" · WIB";showDay((today.getDay()+6)%7);
-const targetDateKey="2026-10-11";
-const targetInputs=[...document.querySelectorAll("#todayTargets input[data-target]")];
-function updateTargetProgress(){let done=0;targetInputs.forEach(input=>{const key="planner-targets-"+targetDateKey+"-"+input.dataset.target;input.checked=localStorage.getItem(key)==="1";input.closest(".target-item").classList.toggle("done",input.checked);if(input.checked)done++;});document.getElementById("targetProgressText").textContent=done+" dari "+targetInputs.length+" selesai";document.getElementById("targetProgressFill").style.width=(done/targetInputs.length*100)+"%";document.querySelector("#dailyTargets [role=progressbar]").setAttribute("aria-valuenow",done);}
-targetInputs.forEach(input=>input.addEventListener("change",()=>{localStorage.setItem("planner-targets-"+targetDateKey+"-"+input.dataset.target,input.checked?"1":"0");updateTargetProgress();}));
-document.getElementById("resetTargets").addEventListener("click",()=>{targetInputs.forEach(input=>localStorage.removeItem("planner-targets-"+targetDateKey+"-"+input.dataset.target));updateTargetProgress();});
-updateTargetProgress();
-
-document.getElementById("downloadTargetCalendar").addEventListener("click",()=>{
-  const events=[
-    {id:"jarkom3",title:"Tugas Jarkom 3",start:[6,0],end:[7,0]},
-    {id:"jarkom4",title:"Tugas Jarkom 4",start:[7,0],end:[8,0]},
-    {id:"jarkom5",title:"Tugas Jarkom 5",start:[8,0],end:[9,0]},
-    {id:"jarkom6",title:"Tugas Jarkom 6",start:[9,0],end:[10,0]},
-    {id:"fix-laptop",title:"Memperbaiki laptop teman",start:[10,0],end:[11,0]},
-    {id:"laprak2",title:"Laprak Jarkom 2",start:[11,0],end:[13,0]},
-    {id:"laprak3",title:"Laprak Jarkom 3",start:[13,0],end:[15,0]},
-    {id:"laprak4",title:"Laprak Jarkom 4",start:[15,0],end:[17,0]}
-  ];
-  const pad=n=>String(n).padStart(2,"0");
-  const utcStamp=(hour,minute)=>{const d=new Date(Date.UTC(2026,9,11,hour-7,minute));return d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+"T"+pad(d.getUTCHours())+pad(d.getUTCMinutes())+"00Z";};
-  const escapeICS=s=>s.replace(/\\/g,"\\\\").replace(/,/g,"\\,").replace(/;/g,"\\;").replace(/\n/g,"\\n");
-  const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Jadwal Pribadi Maul//ID","CALSCALE:GREGORIAN","METHOD:PUBLISH"];
-  events.forEach(e=>{
-    lines.push("BEGIN:VEVENT","UID:"+e.id+"-20261011@jadwal-pribadi","DTSTAMP:"+utcStamp(0,0),"DTSTART:"+utcStamp(e.start[0],e.start[1]),"DTEND:"+utcStamp(e.end[0],e.end[1]),"SUMMARY:"+escapeICS(e.title),"DESCRIPTION:"+escapeICS("Target harian dari Jadwal Pribadi. Waktu WIB (UTC+7)."),"BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+escapeICS("Waktunya: "+e.title),"TRIGGER:PT0M","END:VALARM","END:VEVENT");
-  });
-  lines.push("END:VCALENDAR");
-  const blob=new Blob([lines.join("\r\n")+"\r\n"],{type:"text/calendar;charset=utf-8"});
-  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="target-harian-jarkom-2026-10-11.ics";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+const defaultTargets={
+  "2026-10-11":[
+    {id:"jarkom3",title:"Tugas Jarkom 3",start:"06:00",end:"07:00",note:"Fokus mengerjakan dan cek hasil sebelum lanjut."},
+    {id:"jarkom4",title:"Tugas Jarkom 4",start:"07:00",end:"08:00",note:"Selesaikan bagian utama, lalu simpan pekerjaan."},
+    {id:"jarkom5",title:"Tugas Jarkom 5",start:"08:00",end:"09:00",note:"Kerjakan satu jam fokus; ambil jeda singkat bila perlu."},
+    {id:"jarkom6",title:"Tugas Jarkom 6",start:"09:00",end:"10:00",note:"Rampungkan tugas dan periksa kembali kelengkapannya."},
+    {id:"fix-laptop",title:"Memperbaiki laptop teman",start:"10:00",end:"11:00",note:"Periksa gejala dan lakukan pengecekan sesuai masalahnya."},
+    {id:"laprak2",title:"Laprak Jarkom 2",start:"11:00",end:"13:00",note:"Kerjakan laporan praktikum selama dua jam."},
+    {id:"laprak3",title:"Laprak Jarkom 3",start:"13:00",end:"15:00",note:"Kerjakan laporan praktikum selama dua jam."},
+    {id:"laprak4",title:"Laprak Jarkom 4",start:"15:00",end:"17:00",note:"Kerjakan laporan praktikum selama dua jam."}
+  ]
+};
+const targetDatePicker=document.getElementById("targetDatePicker");
+const targetsStorageKey="jadwal-pribadi-custom-targets-v1";
+const targetDoneStorageKey="jadwal-pribadi-target-progress-v1";
+function readStored(key,fallback){try{return JSON.parse(localStorage.getItem(key)||"null")||fallback;}catch(e){return fallback;}}
+function getCustomTargets(){return readStored(targetsStorageKey,{});}
+function getTargetProgress(){return readStored(targetDoneStorageKey,{});}
+function saveCustomTargets(data){localStorage.setItem(targetsStorageKey,JSON.stringify(data));}
+function saveTargetProgress(data){localStorage.setItem(targetDoneStorageKey,JSON.stringify(data));}
+function dateLabel(dateString){const d=new Date(dateString+"T12:00:00");return d.toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"});}
+function allTargetsForDate(dateString){const custom=getCustomTargets();return [...(defaultTargets[dateString]||[]),...(custom[dateString]||[])];}
+function fmtTime(t){return t.replace(":",".");}
+function escapeTargetHTML(value){return String(value).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));}
+function renderTargetPlanner(){
+  const date=targetDatePicker.value||"2026-10-11",items=allTargetsForDate(date),progress=getTargetProgress(),list=document.getElementById("todayTargets");
+  document.getElementById("selectedDateLabel").textContent=dateLabel(date);
+  if(!items.length){list.innerHTML='<div class="target-empty">Belum ada target untuk tanggal ini. Tambahkan target di formulir di atas.</div>';}
+  else list.innerHTML=items.slice().sort((a,b)=>a.start.localeCompare(b.start)).map(item=>{
+    const done=!!(progress[date]&&progress[date][item.id]);
+    return '<div class="target-item '+(done?'done':'')+'"><input type="checkbox" id="check-target-'+item.id+'" data-target-id="'+item.id+'" '+(done?'checked':'')+'><div class="target-time">'+fmtTime(item.start)+'–'+fmtTime(item.end)+'</div><label for="check-target-'+item.id+'"><span class="target-name">'+escapeTargetHTML(item.title)+'</span><small>'+escapeTargetHTML(item.note||"Target harian")+'</small></label>'+(item.custom?'<button type="button" class="target-delete" data-delete-target="'+item.id+'">Hapus</button>':'')+'</div>';
+  }).join("");
+  const doneCount=items.filter(item=>progress[date]&&progress[date][item.id]).length;
+  document.getElementById("targetProgressText").textContent=doneCount+" dari "+items.length+" selesai";
+  document.getElementById("targetProgressFill").style.width=(items.length?doneCount/items.length*100:0)+"%";
+  document.querySelector("#dailyTargets [role=progressbar]").setAttribute("aria-valuemax",items.length||1);
+  document.querySelector("#dailyTargets [role=progressbar]").setAttribute("aria-valuenow",doneCount);
+  list.querySelectorAll('input[data-target-id]').forEach(input=>input.addEventListener("change",()=>{
+    const current=getTargetProgress();if(!current[date])current[date]={};current[date][input.dataset.targetId]=input.checked;saveTargetProgress(current);renderTargetPlanner();
+  }));
+  list.querySelectorAll('[data-delete-target]').forEach(button=>button.addEventListener("click",()=>{
+    const data=getCustomTargets();data[date]=(data[date]||[]).filter(item=>item.id!==button.dataset.deleteTarget);saveCustomTargets(data);renderTargetPlanner();
+  }));
+  renderUpcomingTargets();
+}
+function renderUpcomingTargets(){
+  const base=targetDatePicker.value||"2026-10-11",baseDate=new Date(base+"T12:00:00"),progress=getTargetProgress(),container=document.getElementById("upcomingTargets"),groups=[];
+  for(let offset=0;offset<7;offset++){
+    const d=new Date(baseDate);d.setDate(d.getDate()+offset);const key=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    const items=allTargetsForDate(key).slice().sort((a,b)=>a.start.localeCompare(b.start));
+    if(items.length)groups.push({date:key,items,done:items.filter(item=>progress[key]&&progress[key][item.id]).length});
+  }
+  container.innerHTML=groups.length?groups.map(group=>'<div class="upcoming-date-group"><h4>'+dateLabel(group.date)+' · '+group.done+'/'+group.items.length+' selesai</h4><ul>'+group.items.map(item=>'<li><strong>'+fmtTime(item.start)+'–'+fmtTime(item.end)+'</strong> · '+escapeTargetHTML(item.title)+'</li>').join("")+'</ul></div>').join(""):'<div class="target-empty">Belum ada target terencana dalam rentang 7 hari ini.</div>';
+}
+document.getElementById("addTargetForm").addEventListener("submit",event=>{
+  event.preventDefault();
+  const date=targetDatePicker.value,title=document.getElementById("newTargetTitle").value.trim(),start=document.getElementById("newTargetStart").value,end=document.getElementById("newTargetEnd").value;
+  if(!date||!title||!start||!end||end<=start){alert("Isi tanggal, nama target, dan waktu yang valid. Waktu selesai harus setelah waktu mulai.");return;}
+  const data=getCustomTargets();if(!data[date])data[date]=[];
+  data[date].push({id:"custom-"+Date.now(),title,start,end,note:"Target yang kamu rencanakan.",custom:true});saveCustomTargets(data);
+  document.getElementById("newTargetTitle").value="";renderTargetPlanner();
 });
+targetDatePicker.addEventListener("change",renderTargetPlanner);
+document.getElementById("resetTargets").addEventListener("click",()=>{
+  const date=targetDatePicker.value||"2026-10-11",progress=getTargetProgress();delete progress[date];saveTargetProgress(progress);renderTargetPlanner();
+});
+document.getElementById("downloadTargetCalendar").addEventListener("click",()=>{
+  const date=targetDatePicker.value||"2026-10-11",items=allTargetsForDate(date);
+  if(!items.length){alert("Belum ada target untuk tanggal ini.");return;}
+  const esc=s=>s.replace(/\\/g,"\\\\").replace(/,/g,"\\,").replace(/;/g,"\\;").replace(/\n/g,"\\n");
+  const compactDate=date.replace(/-/g,"");
+  const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Jadwal Pribadi Maul//ID","CALSCALE:GREGORIAN","METHOD:PUBLISH","BEGIN:VTIMEZONE","TZID:Asia/Jakarta","X-LIC-LOCATION:Asia/Jakarta","BEGIN:STANDARD","DTSTART:19700101T000000","TZOFFSETFROM:+0700","TZOFFSETTO:+0700","TZNAME:WIB","END:STANDARD","END:VTIMEZONE"];
+  items.forEach(item=>{const st=item.start.replace(":","")+"00",en=item.end.replace(":","")+"00";lines.push("BEGIN:VEVENT","UID:target-"+item.id+"-"+compactDate+"@jadwal-pribadi","DTSTAMP:20261011T000000Z","DTSTART;TZID=Asia/Jakarta:"+compactDate+"T"+st,"DTEND;TZID=Asia/Jakarta:"+compactDate+"T"+en,"SUMMARY:"+esc(item.title),"DESCRIPTION:"+esc(item.note||"Target harian"),"BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+esc("Waktunya: "+item.title),"TRIGGER:PT0M","END:VALARM","END:VEVENT");});
+  lines.push("END:VCALENDAR");
+  const blob=new Blob([lines.join("\r\n")+"\r\n"],{type:"text/calendar;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="target-"+date+".ics";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+});
+renderTargetPlanner();
 document.getElementById("downloadRoutineCalendar").addEventListener("click",()=>{
   const events=[
     {id:"wake-up",date:"20261011",start:"050000",end:"051000",title:"Bangun tidur",description:"Pengingat harian untuk memulai hari."},
