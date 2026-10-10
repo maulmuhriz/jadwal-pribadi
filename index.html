@@ -29,6 +29,7 @@ button:hover{border-color:#94a3b8}.tabs button[aria-pressed="true"]{background:v
 .checklist{display:grid;gap:10px}.check{display:flex;align-items:flex-start;gap:10px}.check input{margin-top:5px;accent-color:var(--accent);width:17px;height:17px}.check label{flex:1}.check small{display:block;color:var(--muted);margin-top:2px}
 .targets{display:grid;gap:10px}.target-item{display:grid;grid-template-columns:24px 105px 1fr;align-items:start;gap:10px;padding:13px;border:1px solid var(--line);border-radius:12px}.target-item input{width:18px;height:18px;margin-top:3px;accent-color:var(--green)}.target-time{font-weight:750;color:var(--accent);font-variant-numeric:tabular-nums}.target-item label{cursor:pointer}.target-item small{display:block;color:var(--muted);margin-top:3px}.target-item.done{background:#f0fdfa;border-color:#99f6e4}.target-item.done .target-name{text-decoration:line-through;color:var(--muted)}.target-summary{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin:12px 0}.progress-track{height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden;flex:1;min-width:100px}.progress-fill{height:100%;width:0;background:var(--green);transition:width .2s}.target-summary strong{font-variant-numeric:tabular-nums}
 .target-planner-controls,.target-form{display:grid;gap:8px;margin:14px 0}.target-planner-controls{grid-template-columns:1fr minmax(160px,240px);align-items:center}.target-form{padding:14px;border:1px solid var(--line);border-radius:14px;background:#fbfdff}.target-form label,.target-planner-controls label{font-size:.9rem;font-weight:650}.target-form input,.target-planner-controls input{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink)}.target-time-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.target-time-fields>div{display:grid;gap:6px}.weekly-targets{margin-top:22px}.upcoming-target-list{display:grid;gap:8px}.upcoming-date-group{border:1px solid var(--line);border-radius:12px;padding:12px}.upcoming-date-group h4{margin:0 0 8px;font-size:.95rem}.upcoming-date-group ul{padding-left:18px;margin:0}.upcoming-date-group li{margin:5px 0;color:#475569;font-size:.9rem}.target-delete{font-size:.8rem;padding:5px 8px}.target-item{grid-template-columns:24px 105px minmax(0,1fr) auto}.target-empty{padding:14px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);font-size:.9rem}
+.google-connect{display:grid;gap:10px;padding:14px;border:1px solid var(--line);border-radius:14px;background:#fbfdff;margin-top:14px}.google-connect input{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:9px}.google-actions{display:flex;gap:8px;flex-wrap:wrap}.google-status{font-size:.9rem;color:var(--muted)}
 
 .reminders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.reminder{padding:12px;border:1px solid var(--line);border-radius:12px}.reminder time{font-weight:750;color:var(--accent);display:block}
 .note{border-left:3px solid var(--accent);padding:10px 13px;background:#f1f5f9;border-radius:0 10px 10px 0;color:#475569;font-size:.9rem}
@@ -72,6 +73,15 @@ footer{margin-top:24px;text-align:center;font-size:.82rem;color:var(--muted)}
       <div id="upcomingTargets" class="upcoming-target-list"></div>
     </div>
     <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><button id="resetTargets">Reset progres target</button><button id="downloadTargetCalendar">Unduh pengingat kalender (.ics)</button></div>
+    <div class="google-connect">
+      <h3>Sinkronisasi langsung Google Calendar</h3>
+      <p>Hubungkan akun Google, lalu kirim target pada tanggal yang sedang dipilih langsung ke kalender. Client ID OAuth disimpan hanya di browser ini.</p>
+      <label for="googleClientId">Google OAuth Client ID</label>
+      <input id="googleClientId" type="text" autocomplete="off" placeholder="Contoh: 123456789-abc...apps.googleusercontent.com">
+      <div class="google-actions"><button id="saveGoogleClientId" type="button">Simpan Client ID</button><button id="connectGoogleCalendar" type="button">Hubungkan Google Calendar</button><button id="sendGoogleTargets" type="button">Kirim target tanggal ini</button></div>
+      <div id="googleCalendarStatus" class="google-status" role="status" aria-live="polite">Belum terhubung. Siapkan Google Calendar API dan OAuth Client ID terlebih dahulu.</div>
+      <p class="event-note">Gunakan OAuth Client ID tipe Web application dengan origin resmi <strong>https://maulmuhriz.github.io</strong>. Jangan masukkan Client Secret di sini. Token akses hanya disimpan sementara di memori halaman; setelah halaman dimuat ulang, hubungkan kembali bila diminta.</p>
+    </div>
     <p class="event-note">Target dan progres tersimpan di browser perangkat ini. Agar target tampil di perangkat lain, kamu perlu menambahkannya juga di browser tersebut. Jangan masukkan informasi rahasia karena situs ini publik.</p>
   </section>
   <section class="panel">
@@ -116,6 +126,7 @@ footer{margin-top:24px;text-align:center;font-size:.82rem;color:var(--muted)}
   <div class="note"><strong>Catatan:</strong> Jam di luar kuliah adalah kerangka yang fleksibel. Sesuaikan dengan perjalanan, ibadah, makan, kegiatan kampus tambahan, dan tenggat nyata. Target tidur pukul 23.00 dengan bangun pukul 05.00 hanya menyediakan enam jam; pertimbangkan waktu tidur lebih awal agar istirahat cukup.</div>
   <footer>Jadwal pribadi · Bisa dibuka offline · Tampilan responsif untuk laptop dan HP</footer>
 </main>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
 const days = [
  {name:"Senin",focus:"Kuliah + tugas AI",events:[
@@ -214,6 +225,108 @@ document.getElementById("downloadTargetCalendar").addEventListener("click",()=>{
   lines.push("END:VCALENDAR");
   const blob=new Blob([lines.join("\r\n")+"\r\n"],{type:"text/calendar;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="target-"+date+".ics";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
 });
+
+// Google Calendar API: OAuth client-side flow (no client secret in this public repository).
+const googleClientIdKey = "jadwal-pribadi-google-oauth-client-id";
+let googleAccessToken = null;
+let googleTokenClient = null;
+const googleStatus = document.getElementById("googleCalendarStatus");
+const googleClientInput = document.getElementById("googleClientId");
+googleClientInput.value = localStorage.getItem(googleClientIdKey) || "";
+function setGoogleStatus(message){ googleStatus.textContent = message; }
+function getGoogleClientId(){ return (googleClientInput.value || "").trim(); }
+document.getElementById("saveGoogleClientId").addEventListener("click",()=>{
+  const clientId = getGoogleClientId();
+  if(!clientId || !clientId.endsWith(".apps.googleusercontent.com")){
+    setGoogleStatus("Client ID belum valid. Salin OAuth Client ID dari Google Cloud Console.");
+    return;
+  }
+  localStorage.setItem(googleClientIdKey,clientId);
+  googleAccessToken = null;
+  googleTokenClient = null;
+  setGoogleStatus("Client ID tersimpan di browser. Sekarang tekan Hubungkan Google Calendar.");
+});
+function requestGoogleToken(){
+  const clientId = getGoogleClientId();
+  if(!clientId || !clientId.endsWith(".apps.googleusercontent.com")){
+    setGoogleStatus("Masukkan dan simpan OAuth Client ID terlebih dahulu.");
+    return;
+  }
+  if(!window.google || !window.google.accounts || !window.google.accounts.oauth2){
+    setGoogleStatus("Layanan login Google belum selesai dimuat. Tunggu sebentar lalu coba lagi.");
+    return;
+  }
+  localStorage.setItem(googleClientIdKey,clientId);
+  googleTokenClient = window.google.accounts.oauth2.initTokenClient({
+    client_id: clientId,
+    scope: "https://www.googleapis.com/auth/calendar.events",
+    callback: (response) => {
+      if(response && response.access_token){
+        googleAccessToken = response.access_token;
+        setGoogleStatus("Google Calendar terhubung untuk sesi halaman ini. Kamu bisa mengirim target.");
+      } else {
+        setGoogleStatus("Google belum memberikan token akses. Periksa izin OAuth dan coba lagi.");
+      }
+    },
+    error_callback: (error) => setGoogleStatus("Login Google tidak selesai: " + (error && error.message ? error.message : "coba ulangi prosesnya."))
+  });
+  googleTokenClient.requestAccessToken({prompt:"consent"});
+}
+document.getElementById("connectGoogleCalendar").addEventListener("click",requestGoogleToken);
+async function sendSelectedDateTargets(){
+  if(!googleAccessToken){ setGoogleStatus("Hubungkan Google Calendar terlebih dahulu."); return; }
+  const date = targetDatePicker.value;
+  const items = allTargetsForDate(date);
+  if(!items.length){ setGoogleStatus("Belum ada target untuk tanggal yang dipilih."); return; }
+  const button = document.getElementById("sendGoogleTargets");
+  button.disabled = true;
+  setGoogleStatus("Mengirim " + items.length + " target ke Google Calendar…");
+  const compactDate = date.replace(/-/g,"");
+  const base32hex = "0123456789abcdefghijklmnopqrstuv";
+  function stableId(value){
+    let h = 2166136261;
+    for(let i=0;i<value.length;i++){ h ^= value.charCodeAt(i); h = Math.imul(h,16777619); }
+    let n = h >>> 0, encoded = "";
+    for(let i=0;i<7;i++){ encoded = base32hex[n & 31] + encoded; n >>>= 5; }
+    return "a" + compactDate + encoded;
+  }
+  function isoLocalTime(time){ return date + "T" + time + ":00+07:00"; }
+  try {
+    let sent = 0;
+    for(const item of items){
+      const eventId = stableId(date + "|" + item.id);
+      const event = {
+        id: eventId,
+        summary: item.title,
+        description: (item.note || "Target harian") + "\nDibuat dari Jadwal Pribadi.",
+        start: {dateTime: isoLocalTime(item.start), timeZone:"Asia/Jakarta"},
+        end: {dateTime: isoLocalTime(item.end), timeZone:"Asia/Jakarta"},
+        reminders: {useDefault:false,overrides:[{method:"popup",minutes:0}]},
+        extendedProperties: {private:{planner:"jadwal-pribadi",plannerDate:date,plannerTargetId:item.id}}
+      };
+      const response = await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events/" + eventId,{
+        method:"PUT",
+        headers:{"Authorization":"Bearer " + googleAccessToken,"Content-Type":"application/json"},
+        body:JSON.stringify(event)
+      });
+      if(response.status === 401){
+        googleAccessToken = null;
+        throw new Error("Token akses kedaluwarsa. Tekan Hubungkan Google Calendar lagi.");
+      }
+      if(!response.ok){
+        const detail = await response.json().catch(()=>({}));
+        throw new Error(detail.error && detail.error.message ? detail.error.message : "Google Calendar menolak acara ("+response.status+").");
+      }
+      sent++;
+    }
+    setGoogleStatus("Berhasil menyinkronkan " + sent + " target untuk " + dateLabel(date) + ". Jika target dengan ID yang sama sudah ada, acara diperbarui, bukan digandakan.");
+  } catch(error){
+    setGoogleStatus("Sinkronisasi berhenti: " + error.message);
+  } finally {
+    button.disabled = false;
+  }
+}
+document.getElementById("sendGoogleTargets").addEventListener("click",sendSelectedDateTargets);
 renderTargetPlanner();
 document.getElementById("downloadRoutineCalendar").addEventListener("click",()=>{
   const events=[
