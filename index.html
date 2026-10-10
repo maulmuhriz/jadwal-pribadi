@@ -48,13 +48,17 @@ footer{margin-top:24px;text-align:center;font-size:.82rem;color:var(--muted)}
   </section>
   <section class="panel" id="dailyTargets">
     <div class="section-head"><h2>Target Hari Ini 🎯</h2><span class="tag">Minggu, 11 Oktober 2026</span></div>
-    <p>Fokus menyelesaikan Tugas Jaringan Komputer (Jarkom) 3–6. Setiap tugas mendapat satu jam.</p>
-    <div class="target-summary"><strong id="targetProgressText">0 dari 4 selesai</strong><div class="progress-track" role="progressbar" aria-label="Progres target hari ini" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><div class="progress-fill" id="targetProgressFill"></div></div></div>
+    <p>Target hari ini: Tugas Jarkom 3–6, membantu memperbaiki laptop teman, lalu menyelesaikan Laprak Jarkom 2–4.</p>
+    <div class="target-summary"><strong id="targetProgressText">0 dari 4 selesai</strong><div class="progress-track" role="progressbar" aria-label="Progres target hari ini" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="progress-fill" id="targetProgressFill"></div></div></div>
     <div class="targets" id="todayTargets">
       <div class="target-item"><input type="checkbox" id="target-jarkom3" data-target="jarkom3"><div class="target-time">06.00–07.00</div><label for="target-jarkom3"><span class="target-name">Tugas Jarkom 3</span><small>Fokus mengerjakan dan cek hasil sebelum lanjut.</small></label></div>
       <div class="target-item"><input type="checkbox" id="target-jarkom4" data-target="jarkom4"><div class="target-time">07.00–08.00</div><label for="target-jarkom4"><span class="target-name">Tugas Jarkom 4</span><small>Selesaikan bagian utama, lalu simpan pekerjaan.</small></label></div>
       <div class="target-item"><input type="checkbox" id="target-jarkom5" data-target="jarkom5"><div class="target-time">08.00–09.00</div><label for="target-jarkom5"><span class="target-name">Tugas Jarkom 5</span><small>Kerjakan satu jam fokus; ambil jeda singkat bila perlu.</small></label></div>
       <div class="target-item"><input type="checkbox" id="target-jarkom6" data-target="jarkom6"><div class="target-time">09.00–10.00</div><label for="target-jarkom6"><span class="target-name">Tugas Jarkom 6</span><small>Rampungkan tugas dan periksa kembali kelengkapannya.</small></label></div>
+      <div class="target-item"><input type="checkbox" id="target-fix-laptop" data-target="fix-laptop"><div class="target-time">10.00–11.00</div><label for="target-fix-laptop"><span class="target-name">Memperbaiki laptop teman</span><small>Periksa gejala dan lakukan pengecekan sesuai masalahnya.</small></label></div>
+      <div class="target-item"><input type="checkbox" id="target-laprak2" data-target="laprak2"><div class="target-time">11.00–13.00</div><label for="target-laprak2"><span class="target-name">Laprak Jarkom 2</span><small>Kerjakan laporan praktikum selama dua jam.</small></label></div>
+      <div class="target-item"><input type="checkbox" id="target-laprak3" data-target="laprak3"><div class="target-time">13.00–15.00</div><label for="target-laprak3"><span class="target-name">Laprak Jarkom 3</span><small>Kerjakan laporan praktikum selama dua jam.</small></label></div>
+      <div class="target-item"><input type="checkbox" id="target-laprak4" data-target="laprak4"><div class="target-time">15.00–17.00</div><label for="target-laprak4"><span class="target-name">Laprak Jarkom 4</span><small>Kerjakan laporan praktikum selama dua jam.</small></label></div>
     </div>
     <div style="margin-top:14px"><button id="resetTargets">Reset progres target</button></div>
     <p class="event-note">Centang tiap target setelah selesai. Progres tersimpan di browser perangkat ini; perubahan target pada HTML GitHub bisa dilihat siapa saja karena repositori bersifat publik.</p>
