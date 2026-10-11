@@ -149,6 +149,9 @@ function showDay(idx){[...tabs.children].forEach((b,i)=>b.setAttribute("aria-pre
 days.forEach((d,i)=>{const b=document.createElement("button");b.textContent=d.name;b.setAttribute("aria-pressed","false");b.onclick=()=>showDay(i);tabs.appendChild(b);const card=document.createElement("article");card.className="day-card";card.innerHTML=`<div class="day-top"><h3>${d.name}</h3><span class="tag">${d.events.filter(e=>e[3]==="class").length} kelas/praktikum</span></div><p>${d.focus}</p><ul>${d.events.filter(e=>e[3]==="class").map(e=>`<li><strong>${e[0]}</strong> · ${e[1]}</li>`).join("")||"<li>Tidak ada jadwal kuliah tetap yang diberikan.</li>"}</ul>`;grid.appendChild(card);});
 const today=new Date();const names=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];document.getElementById("todayLabel").textContent=names[today.getDay()]+" · WIB";showDay((today.getDay()+6)%7);
 const defaultTargets={
+  "2026-10-12":[
+    {id:"tugas-ib",title:"Mengerjakan Tugas Inteligensi Buatan (IB)",start:"16:00",end:"18:00",note:"Setelah kuliah IB selesai pukul 15.20 dan perjalanan pulang sekitar 15 menit, istirahat sebentar lalu fokus mengerjakan tugas IB."}
+  ],
   "2026-10-11":[
     {id:"jarkom3",title:"Tugas Jarkom 3",start:"06:00",end:"07:00",note:"Fokus mengerjakan dan cek hasil sebelum lanjut."},
     {id:"jarkom4",title:"Tugas Jarkom 4",start:"07:00",end:"08:00",note:"Selesaikan bagian utama, lalu simpan pekerjaan."},
