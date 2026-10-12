@@ -29,6 +29,7 @@ button:hover{border-color:#94a3b8}.tabs button[aria-pressed="true"]{background:v
 .checklist{display:grid;gap:10px}.check{display:flex;align-items:flex-start;gap:10px}.check input{margin-top:5px;accent-color:var(--accent);width:17px;height:17px}.check label{flex:1}.check small{display:block;color:var(--muted);margin-top:2px}
 .targets{display:grid;gap:10px}.target-item{display:grid;grid-template-columns:24px 105px 1fr;align-items:start;gap:10px;padding:13px;border:1px solid var(--line);border-radius:12px}.target-item input{width:18px;height:18px;margin-top:3px;accent-color:var(--green)}.target-time{font-weight:750;color:var(--accent);font-variant-numeric:tabular-nums}.target-item label{cursor:pointer}.target-item small{display:block;color:var(--muted);margin-top:3px}.target-item.done{background:#f0fdfa;border-color:#99f6e4}.target-item.done .target-name{text-decoration:line-through;color:var(--muted)}.target-summary{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin:12px 0}.progress-track{height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden;flex:1;min-width:100px}.progress-fill{height:100%;width:0;background:var(--green);transition:width .2s}.target-summary strong{font-variant-numeric:tabular-nums}
 .target-planner-controls,.target-form{display:grid;gap:8px;margin:14px 0}.target-planner-controls{grid-template-columns:1fr minmax(160px,240px);align-items:center}.target-form{padding:14px;border:1px solid var(--line);border-radius:14px;background:#fbfdff}.target-form label,.target-planner-controls label{font-size:.9rem;font-weight:650}.target-form input,.target-planner-controls input{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink)}.target-time-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.target-time-fields>div{display:grid;gap:6px}.weekly-targets{margin-top:22px}.upcoming-target-list{display:grid;gap:8px}.upcoming-date-group{border:1px solid var(--line);border-radius:12px;padding:12px}.upcoming-date-group h4{margin:0 0 8px;font-size:.95rem}.upcoming-date-group ul{padding-left:18px;margin:0}.upcoming-date-group li{margin:5px 0;color:#475569;font-size:.9rem}.target-delete{font-size:.8rem;padding:5px 8px}.target-item{grid-template-columns:24px 105px minmax(0,1fr) auto}.target-empty{padding:14px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);font-size:.9rem}
+.class-table-wrap{overflow-x:auto;margin-top:14px;border:1px solid var(--line);border-radius:14px}.class-table{width:100%;border-collapse:collapse;min-width:640px;background:#fff}.class-table th,.class-table td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line)}.class-table th{background:#eef2ff;color:#3730a3;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em}.class-table tr:last-child td{border-bottom:0}.class-table tbody tr:nth-child(even){background:#f8fafc}.class-day{font-weight:750;white-space:nowrap}.class-time{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:650}.class-room{font-weight:650;color:#3157d5}.class-code{display:block;color:var(--muted);font-size:.78rem;margin-top:3px}.class-table tbody tr:hover{background:#eef2ff}.google-actions button:disabled{opacity:.55;cursor:wait}
 .google-connect{display:grid;gap:10px;padding:14px;border:1px solid var(--line);border-radius:14px;background:#fbfdff;margin-top:14px}.google-connect input{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:9px}.google-actions{display:flex;gap:8px;flex-wrap:wrap}.google-status{font-size:.9rem;color:var(--muted)}
 
 .reminders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.reminder{padding:12px;border:1px solid var(--line);border-radius:12px}.reminder time{font-weight:750;color:var(--accent);display:block}
@@ -44,6 +45,26 @@ footer{margin-top:24px;text-align:center;font-size:.82rem;color:var(--muted)}
     <div><div class="eyebrow">Personal planner</div><h1>Jadwal Mingguan</h1><p>Kuliah, tugas, proyek, dan waktu untuk diri sendiri.</p></div>
     <div class="date" id="todayLabel">Waktu Indonesia Barat · WIB</div>
   </header>
+  <section class="panel" id="weeklyClassSchedule">
+    <div class="section-head"><h2>Jadwal Kuliah Mingguan</h2><span class="tag">9 kelas &amp; praktikum</span></div>
+    <p>Jadwal Senin–Jumat beserta kode mata kuliah dan ruangan. Sisihkan sekitar 15 menit untuk perjalanan sekali jalan.</p>
+    <div class="class-table-wrap">
+      <table class="class-table">
+        <thead><tr><th>Hari</th><th>Waktu</th><th>Mata kuliah</th><th>Kode / Kelas</th><th>Ruangan</th></tr></thead>
+        <tbody>
+          <tr><td class="class-day">Senin</td><td class="class-time">10.00–12.00</td><td>K3L<span class="class-code">Keamanan, Kesehatan, Keselamatan dan Lingkungan Kerja Industri</span></td><td>TF25-40115 / TF</td><td class="class-room">GK2 229</td></tr>
+          <tr><td class="class-day">Senin</td><td class="class-time">13.00–15.20</td><td>Inteligensi Buatan</td><td>IF25-22016 / RA</td><td class="class-room">GK2 123</td></tr>
+          <tr><td class="class-day">Selasa</td><td class="class-time">09.20–12.00</td><td>Kapita Selekta</td><td>IF25-41031 / RA</td><td class="class-room">GK2 206</td></tr>
+          <tr><td class="class-day">Selasa</td><td class="class-time">13.00–15.40</td><td>Keamanan Siber</td><td>IF25-31021 / R</td><td class="class-room">Lab IoT Labtek 3</td></tr>
+          <tr><td class="class-day">Rabu</td><td class="class-time">08.00–10.00</td><td>Praktikum Jaringan Komputer</td><td>IF25-21008 / RB</td><td class="class-room">Lab IoT Labtek 3</td></tr>
+          <tr><td class="class-day">Rabu</td><td class="class-time">15.00–17.30</td><td>Kriptografi</td><td>IF25-31019 / R</td><td class="class-room">GK2 318</td></tr>
+          <tr><td class="class-day">Kamis</td><td class="class-time">13.00–15.40</td><td>Metodologi Penelitian</td><td>IF25-41029 / RD</td><td class="class-room">GK2 224</td></tr>
+          <tr><td class="class-day">Jumat</td><td class="class-time">09.20–11.05</td><td>Sistem Informasi</td><td>IF25-22015 / RD</td><td class="class-room">GK2 305</td></tr>
+          <tr><td class="class-day">Jumat</td><td class="class-time">13.00–15.45</td><td>Jaringan Komputer</td><td>IF25-21008 / RB</td><td class="class-room">GK2 302</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
   <section class="stats" aria-label="Ringkasan">
     <div class="stat"><strong>Senin–Jumat</strong><span>Jadwal kuliah utama</span></div>
     <div class="stat"><strong>15 menit</strong><span>Estimasi perjalanan sekali jalan</span></div>
@@ -72,13 +93,13 @@ footer{margin-top:24px;text-align:center;font-size:.82rem;color:var(--muted)}
       <p class="event-note">Target yang sudah kamu simpan untuk tanggal mendatang akan muncul di sini.</p>
       <div id="upcomingTargets" class="upcoming-target-list"></div>
     </div>
-    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><button id="resetTargets">Reset progres target</button><button id="downloadTargetCalendar">Unduh pengingat kalender (.ics)</button></div>
+    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><button id="resetTargets">Reset progres target</button></div>
     <div class="google-connect">
       <h3>Sinkronisasi langsung Google Calendar</h3>
       <p>Hubungkan akun Google, lalu kirim target pada tanggal yang sedang dipilih langsung ke kalender. Client ID OAuth disimpan hanya di browser ini.</p>
       <label for="googleClientId">Google OAuth Client ID</label>
       <input id="googleClientId" type="text" autocomplete="off" placeholder="Contoh: 123456789-abc...apps.googleusercontent.com">
-      <div class="google-actions"><button id="saveGoogleClientId" type="button">Simpan Client ID</button><button id="connectGoogleCalendar" type="button">Hubungkan Google Calendar</button><button id="sendGoogleTargets" type="button">Kirim target tanggal ini</button></div>
+      <div class="google-actions"><button id="saveGoogleClientId" type="button">Simpan Client ID</button><button id="connectGoogleCalendar" type="button">Hubungkan Google Calendar</button><button id="sendGoogleTargets" type="button">Kirim target tanggal ini</button><button id="sendGoogleClasses" type="button">Kirim jadwal kuliah</button><button id="sendGoogleRoutines" type="button">Kirim pengingat rutin</button></div>
       <div id="googleCalendarStatus" class="google-status" role="status" aria-live="polite">Belum terhubung. Siapkan Google Calendar API dan OAuth Client ID terlebih dahulu.</div>
       <p class="event-note">Gunakan OAuth Client ID tipe Web application dengan origin resmi <strong>https://maulmuhriz.github.io</strong>. Jangan masukkan Client Secret di sini. Token akses hanya disimpan sementara di memori halaman; setelah halaman dimuat ulang, hubungkan kembali bila diminta.</p>
     </div>
@@ -89,16 +110,6 @@ footer{margin-top:24px;text-align:center;font-size:.82rem;color:var(--muted)}
     <p>Pilih hari untuk melihat agenda kuliah dan blok kegiatan yang disarankan.</p>
     <div class="tabs" id="dayTabs" role="group" aria-label="Pilih hari"></div>
     <div id="dailySchedule" class="schedule" aria-live="polite"></div>
-  </section>
-  <section class="panel" id="classCalendarExport">
-    <h2>Pengingat kuliah di Google Calendar</h2>
-    <p>Unduh jadwal kuliah berulang setiap minggu, Senin–Jumat, lengkap dengan pengingat 30 menit sebelum kelas. Jadwal dimulai minggu 12 Oktober 2026.</p>
-    <button id="downloadClassCalendar">Unduh jadwal kuliah mingguan (.ics)</button>
-    <p class="event-note">Setelah diimpor ke Google Calendar, periksa pengaturan notifikasi setiap acara. Jadwal berulang ini tidak memiliki tanggal akhir semester karena tanggal akhir belum ditentukan.</p>
-  </section>
-  <section class="panel">
-    <h2>Gambaran satu minggu</h2>
-    <div class="week-grid" id="weekGrid"></div>
   </section>
   <section class="panel">
     <h2>Daftar cek harian</h2>
@@ -120,11 +131,10 @@ footer{margin-top:24px;text-align:center;font-size:.82rem;color:var(--muted)}
       <div class="reminder"><time>20.30 · Setiap hari</time><strong>Evaluasi dan mulai tenang</strong><p>Pengingat untuk menutup aktivitas; waktu tidur tetap fleksibel.</p></div>
       <div class="reminder"><time>19.00 · Setiap Minggu</time><strong>Evaluasi mingguan</strong><p>Cek tenggat, progres proyek, dan rencana pekan baru.</p></div>
     </div>
-    <p style="margin-top:14px"><button id="downloadRoutineCalendar">Unduh pengingat bangun &amp; mandi (.ics)</button></p>
-    <p class="event-note">Impor file ini ke Google Calendar untuk pengingat berulang. Pengingat malam tidak mengunci jam tidur; sesuaikan dengan tugas, kelas, dan kebutuhan istirahat.</p>
+    <p class="event-note">Gunakan tombol <strong>Kirim pengingat rutin</strong> di bagian sinkronisasi Google Calendar untuk menambahkan pengingat berulang langsung ke kalender.</p>
   </section>
   <div class="note"><strong>Catatan:</strong> Jam di luar kuliah adalah kerangka yang fleksibel. Sesuaikan dengan perjalanan, ibadah, makan, kegiatan kampus tambahan, dan tenggat nyata. Target tidur pukul 23.00 dengan bangun pukul 05.00 hanya menyediakan enam jam; pertimbangkan waktu tidur lebih awal agar istirahat cukup.</div>
-  <footer>Jadwal pribadi · Bisa dibuka offline · Tampilan responsif untuk laptop dan HP</footer>
+  <footer>Jadwal pribadi · Sinkronisasi Google Calendar · Tampilan responsif untuk laptop dan HP</footer>
 </main>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
@@ -144,9 +154,9 @@ const days = [
  {name:"Minggu",focus:"Pemulihan + rencana pekan",events:[
   ["05.00–09.00","Rutinitas pagi santai dan sarapan","Pribadi"],["09.00–11.00","Belajar ringan atau tugas mendesak","Fleksibel"],["11.00–13.00","Istirahat dan makan siang","Istirahat","rest"],["13.00–17.00","Keluarga, hobi, dan waktu sosial","Pribadi"],["17.00–19.00","Waktu bebas dan makan","Pribadi"],["19.00–19.30","Evaluasi mingguan dan cek tenggat","Perencanaan"],["19.30–21.00","Siapkan tas, pakaian, dan agenda Senin","Persiapan"],["21.00–23.00","Waktu tenang dan rutinitas malam","Istirahat","rest"]]}
 ];
-const tabs=document.getElementById("dayTabs"), daily=document.getElementById("dailySchedule"), grid=document.getElementById("weekGrid");
+const tabs=document.getElementById("dayTabs"), daily=document.getElementById("dailySchedule");
 function showDay(idx){[...tabs.children].forEach((b,i)=>b.setAttribute("aria-pressed",i===idx?"true":"false"));daily.innerHTML=days[idx].events.map(e=>`<article class="event"><div class="time">${e[0]}</div><div><div class="event-title">${e[1]}</div><span class="tag ${e[3]||""}">${e[2]}</span></div></article>`).join("");}
-days.forEach((d,i)=>{const b=document.createElement("button");b.textContent=d.name;b.setAttribute("aria-pressed","false");b.onclick=()=>showDay(i);tabs.appendChild(b);const card=document.createElement("article");card.className="day-card";card.innerHTML=`<div class="day-top"><h3>${d.name}</h3><span class="tag">${d.events.filter(e=>e[3]==="class").length} kelas/praktikum</span></div><p>${d.focus}</p><ul>${d.events.filter(e=>e[3]==="class").map(e=>`<li><strong>${e[0]}</strong> · ${e[1]}</li>`).join("")||"<li>Tidak ada jadwal kuliah tetap yang diberikan.</li>"}</ul>`;grid.appendChild(card);});
+days.forEach((d,i)=>{const b=document.createElement("button");b.textContent=d.name;b.setAttribute("aria-pressed","false");b.onclick=()=>showDay(i);tabs.appendChild(b);});
 const today=new Date();const names=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];document.getElementById("todayLabel").textContent=names[today.getDay()]+" · WIB";showDay((today.getDay()+6)%7);
 const defaultTargets={
   "2026-10-12":[
@@ -218,17 +228,6 @@ targetDatePicker.addEventListener("change",renderTargetPlanner);
 document.getElementById("resetTargets").addEventListener("click",()=>{
   const date=targetDatePicker.value||"2026-10-11",progress=getTargetProgress();delete progress[date];saveTargetProgress(progress);renderTargetPlanner();
 });
-document.getElementById("downloadTargetCalendar").addEventListener("click",()=>{
-  const date=targetDatePicker.value||"2026-10-11",items=allTargetsForDate(date);
-  if(!items.length){alert("Belum ada target untuk tanggal ini.");return;}
-  const esc=s=>s.replace(/\\/g,"\\\\").replace(/,/g,"\\,").replace(/;/g,"\\;").replace(/\n/g,"\\n");
-  const compactDate=date.replace(/-/g,"");
-  const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Jadwal Pribadi Maul//ID","CALSCALE:GREGORIAN","METHOD:PUBLISH","BEGIN:VTIMEZONE","TZID:Asia/Jakarta","X-LIC-LOCATION:Asia/Jakarta","BEGIN:STANDARD","DTSTART:19700101T000000","TZOFFSETFROM:+0700","TZOFFSETTO:+0700","TZNAME:WIB","END:STANDARD","END:VTIMEZONE"];
-  items.forEach(item=>{const st=item.start.replace(":","")+"00",en=item.end.replace(":","")+"00";lines.push("BEGIN:VEVENT","UID:target-"+item.id+"-"+compactDate+"@jadwal-pribadi","DTSTAMP:20261011T000000Z","DTSTART;TZID=Asia/Jakarta:"+compactDate+"T"+st,"DTEND;TZID=Asia/Jakarta:"+compactDate+"T"+en,"SUMMARY:"+esc(item.title),"DESCRIPTION:"+esc(item.note||"Target harian"),"BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+esc("Waktunya: "+item.title),"TRIGGER:PT0M","END:VALARM","END:VEVENT");});
-  lines.push("END:VCALENDAR");
-  const blob=new Blob([lines.join("\r\n")+"\r\n"],{type:"text/calendar;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="target-"+date+".ics";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
-});
-
 // Google Calendar API: OAuth client-side flow (no client secret in this public repository).
 const googleClientIdKey = "jadwal-pribadi-google-oauth-client-id";
 let googleAccessToken = null;
@@ -239,135 +238,80 @@ googleClientInput.value = localStorage.getItem(googleClientIdKey) || "";
 function setGoogleStatus(message){ googleStatus.textContent = message; }
 function getGoogleClientId(){ return (googleClientInput.value || "").trim(); }
 document.getElementById("saveGoogleClientId").addEventListener("click",()=>{
-  const clientId = getGoogleClientId();
-  if(!clientId || !clientId.endsWith(".apps.googleusercontent.com")){
-    setGoogleStatus("Client ID belum valid. Salin OAuth Client ID dari Google Cloud Console.");
-    return;
-  }
-  localStorage.setItem(googleClientIdKey,clientId);
-  googleAccessToken = null;
-  googleTokenClient = null;
+  const clientId=getGoogleClientId();
+  if(!clientId||!clientId.endsWith(".apps.googleusercontent.com")){setGoogleStatus("Client ID belum valid. Salin OAuth Client ID dari Google Cloud Console.");return;}
+  localStorage.setItem(googleClientIdKey,clientId);googleAccessToken=null;googleTokenClient=null;
   setGoogleStatus("Client ID tersimpan di browser. Sekarang tekan Hubungkan Google Calendar.");
 });
 function requestGoogleToken(){
-  const clientId = getGoogleClientId();
-  if(!clientId || !clientId.endsWith(".apps.googleusercontent.com")){
-    setGoogleStatus("Masukkan dan simpan OAuth Client ID terlebih dahulu.");
-    return;
-  }
-  if(!window.google || !window.google.accounts || !window.google.accounts.oauth2){
-    setGoogleStatus("Layanan login Google belum selesai dimuat. Tunggu sebentar lalu coba lagi.");
-    return;
-  }
+  const clientId=getGoogleClientId();
+  if(!clientId||!clientId.endsWith(".apps.googleusercontent.com")){setGoogleStatus("Masukkan dan simpan OAuth Client ID terlebih dahulu.");return;}
+  if(!window.google||!window.google.accounts||!window.google.accounts.oauth2){setGoogleStatus("Layanan login Google belum selesai dimuat. Tunggu sebentar lalu coba lagi.");return;}
   localStorage.setItem(googleClientIdKey,clientId);
-  googleTokenClient = window.google.accounts.oauth2.initTokenClient({
-    client_id: clientId,
-    scope: "https://www.googleapis.com/auth/calendar.events",
-    callback: (response) => {
-      if(response && response.access_token){
-        googleAccessToken = response.access_token;
-        setGoogleStatus("Google Calendar terhubung untuk sesi halaman ini. Kamu bisa mengirim target.");
-      } else {
-        setGoogleStatus("Google belum memberikan token akses. Periksa izin OAuth dan coba lagi.");
-      }
-    },
-    error_callback: (error) => setGoogleStatus("Login Google tidak selesai: " + (error && error.message ? error.message : "coba ulangi prosesnya."))
+  googleTokenClient=window.google.accounts.oauth2.initTokenClient({
+    client_id:clientId,scope:"https://www.googleapis.com/auth/calendar.events",
+    callback:(response)=>{if(response&&response.access_token){googleAccessToken=response.access_token;setGoogleStatus("Google Calendar terhubung. Kamu bisa mengirim target, jadwal kuliah, dan pengingat rutin.");}else setGoogleStatus("Google belum memberikan token akses. Periksa izin OAuth dan coba lagi.");},
+    error_callback:(error)=>setGoogleStatus("Login Google tidak selesai: "+(error&&error.message?error.message:"coba ulangi prosesnya."))
   });
   googleTokenClient.requestAccessToken({prompt:""});
 }
 document.getElementById("connectGoogleCalendar").addEventListener("click",requestGoogleToken);
-async function sendSelectedDateTargets(){
-  if(!googleAccessToken){ setGoogleStatus("Hubungkan Google Calendar terlebih dahulu."); return; }
-  const date = targetDatePicker.value;
-  const items = allTargetsForDate(date);
-  if(!items.length){ setGoogleStatus("Belum ada target untuk tanggal yang dipilih."); return; }
-  const button = document.getElementById("sendGoogleTargets");
-  button.disabled = true;
-  setGoogleStatus("Mengirim " + items.length + " target ke Google Calendar…");
-  const compactDate = date.replace(/-/g,"");
-  const base32hex = "0123456789abcdefghijklmnopqrstuv";
-  function stableId(value){
-    let h = 2166136261;
-    for(let i=0;i<value.length;i++){ h ^= value.charCodeAt(i); h = Math.imul(h,16777619); }
-    let n = h >>> 0, encoded = "";
-    for(let i=0;i<7;i++){ encoded = base32hex[n & 31] + encoded; n >>>= 5; }
-    return "a" + compactDate + encoded;
-  }
-  function isoLocalTime(time){ return date + "T" + time + ":00+07:00"; }
-  try {
-    let sent = 0;
-    for(const item of items){
-      const eventId = stableId(date + "|" + item.id);
-      const event = {
-        id: eventId,
-        summary: item.title,
-        description: (item.note || "Target harian") + "\nDibuat dari Jadwal Pribadi.",
-        start: {dateTime: isoLocalTime(item.start), timeZone:"Asia/Jakarta"},
-        end: {dateTime: isoLocalTime(item.end), timeZone:"Asia/Jakarta"},
-        reminders: {useDefault:false,overrides:[{method:"popup",minutes:0}]},
-        extendedProperties: {private:{planner:"jadwal-pribadi",plannerDate:date,plannerTargetId:item.id}}
-      };
-      const headers = {"Authorization":"Bearer " + googleAccessToken,"Content-Type":"application/json"};
-      let response = await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events",{
-        method:"POST",headers,body:JSON.stringify(event)
-      });
-      // If the deterministic event ID already exists, update it rather than creating a duplicate.
-      if(response.status === 409){
-        response = await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events/" + eventId,{
-          method:"PUT",headers,body:JSON.stringify(event)
-        });
-      }
-      if(response.status === 401){
-        googleAccessToken = null;
-        throw new Error("Token akses kedaluwarsa. Tekan Hubungkan Google Calendar lagi.");
-      }
-      if(!response.ok){
-        const detail = await response.json().catch(()=>({}));
-        throw new Error(detail.error && detail.error.message ? detail.error.message : "Google Calendar menolak acara ("+response.status+").");
-      }
-      sent++;
-    }
-    setGoogleStatus("Berhasil menyinkronkan " + sent + " target untuk " + dateLabel(date) + ". Jika target dengan ID yang sama sudah ada, acara diperbarui, bukan digandakan.");
-  } catch(error){
-    setGoogleStatus("Sinkronisasi berhenti: " + error.message);
-  } finally {
-    button.disabled = false;
-  }
+function makeStableGoogleId(key){
+  const alphabet="0123456789abcdefghijklmnopqrstuv";let h=2166136261;
+  for(let i=0;i<key.length;i++){h^=key.charCodeAt(i);h=Math.imul(h,16777619);}
+  let n=h>>>0,encoded="";for(let i=0;i<7;i++){encoded=alphabet[n&31]+encoded;n>>>=5;}
+  return "a"+encoded+alphabet[(key.length+encoded.charCodeAt(0))%alphabet.length];
 }
+async function upsertGoogleEvent(event){
+  const headers={"Authorization":"Bearer "+googleAccessToken,"Content-Type":"application/json"};
+  let response=await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events",{method:"POST",headers,body:JSON.stringify(event)});
+  if(response.status===409)response=await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events/"+event.id,{method:"PUT",headers,body:JSON.stringify(event)});
+  if(response.status===401){googleAccessToken=null;throw new Error("Token akses kedaluwarsa. Tekan Hubungkan Google Calendar lagi.");}
+  if(!response.ok){const detail=await response.json().catch(()=>({}));throw new Error(detail.error&&detail.error.message?detail.error.message:"Google Calendar menolak acara ("+response.status+").");}
+}
+async function syncGoogleEvents(events,description){
+  if(!googleAccessToken){setGoogleStatus("Hubungkan Google Calendar terlebih dahulu.");return;}
+  const buttons=["sendGoogleTargets","sendGoogleClasses","sendGoogleRoutines"].map(id=>document.getElementById(id));buttons.forEach(button=>button.disabled=true);
+  let sent=0;setGoogleStatus("Mengirim "+events.length+" acara ("+description+") ke Google Calendar…");
+  try{for(const event of events){await upsertGoogleEvent(event);sent++;}setGoogleStatus("Berhasil menyinkronkan "+sent+" acara: "+description+". Sinkronisasi ulang memperbarui acara yang sama.");}
+  catch(error){setGoogleStatus("Sinkronisasi berhenti setelah "+sent+" acara: "+error.message);}
+  finally{buttons.forEach(button=>button.disabled=false);}
+}
+function calendarTime(date,time){return {dateTime:date+"T"+time+":00+07:00",timeZone:"Asia/Jakarta"};}
+async function sendSelectedDateTargets(){
+  const date=targetDatePicker.value,items=allTargetsForDate(date);
+  if(!items.length){setGoogleStatus("Belum ada target untuk tanggal yang dipilih.");return;}
+  const events=items.map(item=>({id:makeStableGoogleId("target|"+date+"|"+item.id),summary:item.title,description:(item.note||"Target harian")+"\nDibuat dari Jadwal Pribadi.",start:calendarTime(date,item.start),end:calendarTime(date,item.end),reminders:{useDefault:false,overrides:[{method:"popup",minutes:0}]},extendedProperties:{private:{planner:"jadwal-pribadi",plannerDate:date,plannerTargetId:item.id}}}));
+  await syncGoogleEvents(events,"target "+dateLabel(date));
+}
+const recurringClasses=[
+  {id:"k3l",day:"MO",date:"2026-10-12",start:"10:00",end:"12:00",title:"K3L",room:"GK2 229"},
+  {id:"ai",day:"MO",date:"2026-10-12",start:"13:00",end:"15:20",title:"Inteligensi Buatan",room:"GK2 123"},
+  {id:"kapita-selekta",day:"TU",date:"2026-10-13",start:"09:20",end:"12:00",title:"Kapita Selekta",room:"GK2 206"},
+  {id:"cybersecurity",day:"TU",date:"2026-10-13",start:"13:00",end:"15:40",title:"Keamanan Siber",room:"Lab IoT Labtek 3"},
+  {id:"jarkom-lab",day:"WE",date:"2026-10-14",start:"08:00",end:"10:00",title:"Praktikum Jaringan Komputer",room:"Lab IoT Labtek 3"},
+  {id:"kriptografi",day:"WE",date:"2026-10-14",start:"15:00",end:"17:30",title:"Kriptografi",room:"GK2 318"},
+  {id:"metodologi-penelitian",day:"TH",date:"2026-10-15",start:"13:00",end:"15:40",title:"Metodologi Penelitian",room:"GK2 224"},
+  {id:"sistem-informasi",day:"FR",date:"2026-10-16",start:"09:20",end:"11:05",title:"Sistem Informasi",room:"GK2 305"},
+  {id:"jaringan-komputer",day:"FR",date:"2026-10-16",start:"13:00",end:"15:45",title:"Jaringan Komputer",room:"GK2 302"}
+];
 document.getElementById("sendGoogleTargets").addEventListener("click",sendSelectedDateTargets);
+document.getElementById("sendGoogleClasses").addEventListener("click",()=>{
+  const events=recurringClasses.map(item=>({id:makeStableGoogleId("class|"+item.id),summary:item.title+" · "+item.room,location:item.room,description:"Jadwal kuliah mingguan. Ruangan: "+item.room+". Sisihkan sekitar 15 menit untuk perjalanan sekali jalan.",start:calendarTime(item.date,item.start),end:calendarTime(item.date,item.end),recurrence:["RRULE:FREQ=WEEKLY;BYDAY="+item.day],reminders:{useDefault:false,overrides:[{method:"popup",minutes:30}]},extendedProperties:{private:{planner:"jadwal-pribadi",plannerType:"class",plannerClassId:item.id}}}));
+  syncGoogleEvents(events,"jadwal kuliah mingguan");
+});
+document.getElementById("sendGoogleRoutines").addEventListener("click",()=>{
+  const daily=[
+    {id:"wake-up",start:"05:00",end:"05:10",title:"Bangun tidur",description:"Pengingat harian untuk memulai hari."},
+    {id:"shower",start:"05:10",end:"05:30",title:"Mandi dan bersiap",description:"Rutinitas pagi; sesuaikan durasinya sesuai kebutuhan."},
+    {id:"agenda-check",start:"06:30",end:"06:40",title:"Cek agenda harian",description:"Periksa jadwal, tenggat, dan tiga prioritas."},
+    {id:"wind-down",start:"20:30",end:"20:40",title:"Evaluasi singkat dan mulai tenang (fleksibel)",description:"Mulai menutup aktivitas dan siapkan besok. Jam tidur tetap fleksibel."}
+  ];
+  const events=daily.map(item=>({id:makeStableGoogleId("routine-daily|"+item.id),summary:item.title,description:item.description,start:calendarTime("2026-10-12",item.start),end:calendarTime("2026-10-12",item.end),recurrence:["RRULE:FREQ=DAILY"],reminders:{useDefault:false,overrides:[{method:"popup",minutes:0}]},extendedProperties:{private:{planner:"jadwal-pribadi",plannerType:"routine",plannerRoutineId:item.id}}}));
+  events.push({id:makeStableGoogleId("routine-weekly|weekly-review"),summary:"Evaluasi mingguan",description:"Cek tenggat, progres proyek, dan rencana pekan baru.",start:calendarTime("2026-10-18","19:00"),end:calendarTime("2026-10-18","19:30"),recurrence:["RRULE:FREQ=WEEKLY;BYDAY=SU"],reminders:{useDefault:false,overrides:[{method:"popup",minutes:0}]},extendedProperties:{private:{planner:"jadwal-pribadi",plannerType:"routine",plannerRoutineId:"weekly-review"}}});
+  syncGoogleEvents(events,"pengingat rutin");
+});
 renderTargetPlanner();
-document.getElementById("downloadRoutineCalendar").addEventListener("click",()=>{
-  const events=[
-    {id:"wake-up",date:"20261011",start:"050000",end:"051000",title:"Bangun tidur",description:"Pengingat harian untuk memulai hari."},
-    {id:"shower",date:"20261011",start:"051000",end:"053000",title:"Mandi dan bersiap",description:"Rutinitas pagi; sesuaikan durasinya sesuai kebutuhan."},
-    {id:"wind-down",date:"20261011",start:"203000",end:"204000",title:"Evaluasi singkat dan mulai tenang (fleksibel)",description:"Mulai menutup aktivitas dan siapkan besok. Jam tidur tetap fleksibel."}
-  ];
-  const esc=s=>s.replace(/\\/g,"\\\\").replace(/,/g,"\\,").replace(/;/g,"\\;").replace(/\n/g,"\\n");
-  const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Jadwal Pribadi Maul//ID","CALSCALE:GREGORIAN","METHOD:PUBLISH","BEGIN:VTIMEZONE","TZID:Asia/Jakarta","X-LIC-LOCATION:Asia/Jakarta","BEGIN:STANDARD","DTSTART:19700101T000000","TZOFFSETFROM:+0700","TZOFFSETTO:+0700","TZNAME:WIB","END:STANDARD","END:VTIMEZONE"];
-  events.forEach(e=>lines.push("BEGIN:VEVENT","UID:routine-"+e.id+"@jadwal-pribadi","DTSTAMP:20261011T000000Z","DTSTART;TZID=Asia/Jakarta:"+e.date+"T"+e.start,"DTEND;TZID=Asia/Jakarta:"+e.date+"T"+e.end,"RRULE:FREQ=DAILY","SUMMARY:"+esc(e.title),"DESCRIPTION:"+esc(e.description),"BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+esc("Pengingat: "+e.title),"TRIGGER:PT0M","END:VALARM","END:VEVENT"));
-  lines.push("END:VCALENDAR");
-  const blob=new Blob([lines.join("\r\n")+"\r\n"],{type:"text/calendar;charset=utf-8"});
-  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="rutinitas-bangun-mandi-maul.ics";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
-});
-document.getElementById("downloadClassCalendar").addEventListener("click",()=>{
-  const classes=[
-    {id:"k3l",day:"MO",date:"20261012",start:"100000",end:"120000",title:"K3L",room:"GK2 229"},
-    {id:"ai",day:"MO",date:"20261012",start:"130000",end:"152000",title:"Inteligensi Buatan",room:"GK2 123"},
-    {id:"kapita-selekta",day:"TU",date:"20261013",start:"092000",end:"120000",title:"Kapita Selekta",room:"GK2 206"},
-    {id:"cybersecurity",day:"TU",date:"20261013",start:"130000",end:"154000",title:"Keamanan Siber",room:"Lab IoT Labtek 3"},
-    {id:"jarkom-lab",day:"WE",date:"20261014",start:"080000",end:"100000",title:"Praktikum Jaringan Komputer",room:"Lab IoT Labtek 3"},
-    {id:"kriptografi",day:"WE",date:"20261014",start:"150000",end:"173000",title:"Kriptografi",room:"GK2 318"},
-    {id:"metodologi-penelitian",day:"TH",date:"20261015",start:"130000",end:"154000",title:"Metodologi Penelitian",room:"GK2 224"},
-    {id:"sistem-informasi",day:"FR",date:"20261016",start:"092000",end:"110500",title:"Sistem Informasi",room:"GK2 305"},
-    {id:"jaringan-komputer",day:"FR",date:"20261016",start:"130000",end:"154500",title:"Jaringan Komputer",room:"GK2 302"}
-  ];
-  const esc=s=>s.replace(/\\/g,"\\\\").replace(/,/g,"\\,").replace(/;/g,"\\;").replace(/\n/g,"\\n");
-  const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Jadwal Pribadi Maul//ID","CALSCALE:GREGORIAN","METHOD:PUBLISH","BEGIN:VTIMEZONE","TZID:Asia/Jakarta","X-LIC-LOCATION:Asia/Jakarta","BEGIN:STANDARD","DTSTART:19700101T000000","TZOFFSETFROM:+0700","TZOFFSETTO:+0700","TZNAME:WIB","END:STANDARD","END:VTIMEZONE"];
-  classes.forEach(c=>lines.push("BEGIN:VEVENT","UID:class-"+c.id+"@jadwal-pribadi","DTSTAMP:20261011T000000Z","DTSTART;TZID=Asia/Jakarta:"+c.date+"T"+c.start,"DTEND;TZID=Asia/Jakarta:"+c.date+"T"+c.end,"RRULE:FREQ=WEEKLY;BYDAY="+c.day,"SUMMARY:"+esc(c.title+" · "+c.room),"LOCATION:"+esc(c.room),"DESCRIPTION:"+esc("Ruang: "+c.room+". Jadwal kuliah mingguan. Sisihkan waktu perjalanan sekitar 15 menit sekali jalan."),"BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+esc("Persiapan kuliah: "+c.title+" (30 menit lagi)"),"TRIGGER:-PT30M","END:VALARM","END:VEVENT"));
-  lines.push("END:VCALENDAR");
-  const blob=new Blob([lines.join("\r\n")+"\r\n"],{type:"text/calendar;charset=utf-8"});
-  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="jadwal-kuliah-mingguan-maul.ics";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
-});
 document.querySelectorAll("#checklist input").forEach(input=>{const key="planner-"+new Date().toLocaleDateString("sv-SE")+"-"+input.dataset.key;input.checked=localStorage.getItem(key)==="1";input.addEventListener("change",()=>localStorage.setItem(key,input.checked?"1":"0"));});
 document.getElementById("resetChecks").addEventListener("click",()=>{document.querySelectorAll("#checklist input").forEach(input=>{input.checked=false;localStorage.removeItem("planner-"+new Date().toLocaleDateString("sv-SE")+"-"+input.dataset.key);});});
 </script>
