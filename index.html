@@ -160,7 +160,8 @@ days.forEach((d,i)=>{const b=document.createElement("button");b.textContent=d.na
 const today=new Date();const names=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];document.getElementById("todayLabel").textContent=names[today.getDay()]+" · WIB";showDay((today.getDay()+6)%7);
 const defaultTargets={
   "2026-10-12":[
-    {id:"tugas-ib",title:"Mengerjakan Tugas Inteligensi Buatan (IB)",start:"16:00",end:"18:00",note:"Setelah kuliah IB selesai pukul 15.20 dan perjalanan pulang sekitar 15 menit, istirahat sebentar lalu fokus mengerjakan tugas IB."}
+    {id:"tugas-ib",title:"Mengerjakan Tugas Inteligensi Buatan (IB)",start:"16:00",end:"18:00",note:"Setelah kuliah IB selesai pukul 15.20 dan perjalanan pulang sekitar 15 menit, istirahat sebentar lalu fokus mengerjakan tugas IB."},
+    {id:"tugas3-keamanan-siber",title:"Mengerjakan Tugas 3 Keamanan Siber",start:"23:00",end:"23:45",note:"Fokus 45 menit. Baca semua soal, kerjakan bagian yang bisa diselesaikan, lalu simpan hasil dan catat bagian yang perlu dilanjutkan."}
   ],
   "2026-10-11":[
     {id:"jarkom3",title:"Tugas Jarkom 3",start:"06:00",end:"07:00",note:"Fokus mengerjakan dan cek hasil sebelum lanjut."},
